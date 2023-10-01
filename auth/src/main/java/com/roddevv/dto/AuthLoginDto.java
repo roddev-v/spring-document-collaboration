@@ -1,5 +1,6 @@
 package com.roddevv.dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,8 @@ import javax.validation.constraints.Size;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRegisterDto {
+public class AuthLoginDto {
+
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
     private String email;
@@ -22,7 +24,4 @@ public class AuthRegisterDto {
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).*$",
             message = "Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character")
     private String password;
-
-    @NotBlank(message = "Nickname is required")
-    private String nickname;
 }

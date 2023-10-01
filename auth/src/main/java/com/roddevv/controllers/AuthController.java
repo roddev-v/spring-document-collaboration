@@ -1,14 +1,12 @@
 package com.roddevv.controllers;
 
 import com.roddevv.dto.AuthRegisterDto;
-import com.roddevv.dto.AuthRegisterResponseDto;
-import com.roddevv.dto.AuthResponseDto;
+import com.roddevv.dto.AuthDto;
+import com.roddevv.dto.AuthLoginDto;
+import com.roddevv.dto.TokenDto;
 import com.roddevv.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -20,13 +18,20 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    AuthResponseDto login() {
-        return new AuthResponseDto();
+    AuthDto login(@RequestBody @Valid AuthLoginDto loginDto) {
+        final String token = authService.login(loginDto);
+        return new AuthDto(token);
     }
 
     @PostMapping("/register")
-    AuthRegisterResponseDto register(@RequestBody @Valid AuthRegisterDto registerDto) {
+    AuthDto register(@RequestBody @Valid AuthRegisterDto registerDto) {
         final String token = authService.register(registerDto);
-        return new AuthRegisterResponseDto(token);
+        return new AuthDto(token);
+    }
+
+    @PostMapping("/check-token/{token}")
+    TokenDto checkToken(@PathVariable() String token) {
+        final boolean isExpired = authService.checkToken(token);
+        return new TokenDto(isExpired);
     }
 }

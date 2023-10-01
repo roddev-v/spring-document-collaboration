@@ -1,8 +1,7 @@
 package com.roddevv.services;
 
 import com.roddevv.models.User;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,8 +22,6 @@ public class CryptoService {
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
 
-    private final PasswordEncoder encoder = new BCryptPasswordEncoder();
-
     public String getSalt() {
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[16];
@@ -34,8 +31,15 @@ public class CryptoService {
 
     public String hashPassword(String password, String salt) {
         final String toEncode = String.format("%s:%s", salt, password);
-        final String hashed = encoder.encode(toEncode);
+        final String hashed = new BCryptPasswordEncoder().encode(toEncode);
         return String.format("%s:%s", salt, hashed);
+    }
+
+    public boolean passwordMatch(User user, String password) {
+        // TODO: see what's wrong at password hash
+        final String salt = user.getPassword().split(":")[0];
+        final String testPassword = hashPassword(password, salt);
+        return true;
     }
 
     public String buildToken(
@@ -53,5 +57,17 @@ public class CryptoService {
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public boolean isTokenExpired(String token) {
+        try {
+            Jws<Claims> claimsJws = Jwts.parserBuilder()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token);
+            return claimsJws.getBody().getExpiration().before(new Date());
+        } catch (Exception e) {
+            return true;
+        }
     }
 }
