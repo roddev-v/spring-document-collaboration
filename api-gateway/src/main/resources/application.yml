@@ -1,0 +1,27 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          lower-case-service-id: true
+          enabled: true
+      routes:
+        - id: register
+          uri: lb://AUTH-SERVICE
+          predicates:
+            - Path=/auth/**
+        - id: uuid
+          uri: https://httpbin.org/uuid
+          predicates:
+            - Path=/uuid
+server:
+  port: 8080
+

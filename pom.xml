@@ -20,6 +20,7 @@
     <modules>
         <module>auth</module>
         <module>service-discovery</module>
+        <module>api-gateway</module>
     </modules>
 
     <properties>
@@ -33,4 +34,15 @@
             </plugin>
         </plugins>
     </build>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2022.0.3</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>
