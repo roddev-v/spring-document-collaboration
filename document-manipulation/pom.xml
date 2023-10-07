@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>com.roddevv</groupId>
-    <artifactId>api-gateway</artifactId>
+    <artifactId>document-manipulation</artifactId>
 
     <properties>
         <maven.compiler.source>20</maven.compiler.source>
@@ -24,8 +24,16 @@
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>

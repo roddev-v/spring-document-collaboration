@@ -1,6 +1,6 @@
 package com.roddevv.repositories;
 
-import com.roddevv.models.User;
+import com.roddevv.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {

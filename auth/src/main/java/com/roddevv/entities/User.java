@@ -1,4 +1,4 @@
-package com.roddevv.models;
+package com.roddevv.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

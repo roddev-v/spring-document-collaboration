@@ -14,14 +14,14 @@ spring:
           lower-case-service-id: true
           enabled: true
       routes:
-        - id: register
+        - id: auth
           uri: lb://AUTH-SERVICE
           predicates:
             - Path=/auth/**
-        - id: uuid
-          uri: https://httpbin.org/uuid
+        - id: document-manipulation
+          uri: lb://DOCUMENT-MANIPULATION-SERVICE
           predicates:
-            - Path=/uuid
+            - Path=/document/**
 server:
   port: 8080
 

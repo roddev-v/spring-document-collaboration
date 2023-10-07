@@ -1,9 +1,7 @@
 package com.roddevv.services;
 
-import com.roddevv.dto.AuthLoginDto;
-import com.roddevv.dto.AuthRegisterDto;
-import com.roddevv.dto.TokenDto;
-import com.roddevv.models.User;
+import com.roddevv.dto.*;
+import com.roddevv.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -18,33 +16,35 @@ public class AuthService {
     @Autowired
     private CryptoService cryptoService;
 
-    public String login(AuthLoginDto dto) {
+    public AuthDto login(AuthLoginDto dto) {
         final User dbUser = userService.getUser(dto.getEmail());
         if (dbUser == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user credentials");
         }
         final boolean match = cryptoService.passwordMatch(dbUser, dto.getPassword());
         if (!match) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User not found");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid user credentials");
         }
-        return cryptoService.buildToken(dbUser);
+        final String token = cryptoService.buildToken(dbUser);
+        final UserDto userDto = UserDto.builder().email(dbUser.getEmail()).id(dbUser.getId()).nickname(dbUser.getNickname()).build();
+        return new AuthDto(token, userDto);
     }
 
-    public String register(AuthRegisterDto dto) {
+    public AuthDto register(AuthRegisterDto dto) {
         final User dbUser = userService.getUser(dto.getEmail());
         if (dbUser != null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request");
         }
 
-        final String salt = cryptoService.getSalt();
-        final String hashed = cryptoService.hashPassword(dto.getPassword(), salt);
-
+        final String hashed = cryptoService.hashPassword(dto.getPassword());
         final User newUser = User.builder().nickname(dto.getNickname()).email(dto.getEmail()).password(hashed).build();
         final User user = userService.createUser(newUser);
-        return cryptoService.buildToken(user);
+        final String token = cryptoService.buildToken(user);
+        final UserDto userDto = UserDto.builder().email(user.getEmail()).id(user.getId()).nickname(user.getNickname()).build();
+        return new AuthDto(token, userDto);
     }
 
-    public boolean checkToken(String token) {
-        return cryptoService.isTokenExpired(token);
+    public TokenDto checkToken(TokenCheckDto dto) {
+        return new TokenDto(cryptoService.isTokenExpired(dto.getToken()));
     }
 }

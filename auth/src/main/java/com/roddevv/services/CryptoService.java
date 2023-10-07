@@ -1,9 +1,10 @@
 package com.roddevv.services;
 
-import com.roddevv.models.User;
+import com.roddevv.entities.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,24 +23,15 @@ public class CryptoService {
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
 
-    public String getSalt() {
-        SecureRandom random = new SecureRandom();
-        byte[] salt = new byte[16];
-        random.nextBytes(salt);
-        return Base64.getEncoder().encodeToString(salt);
-    }
+    @Autowired
+    protected PasswordEncoder passwordEncoder;
 
-    public String hashPassword(String password, String salt) {
-        final String toEncode = String.format("%s:%s", salt, password);
-        final String hashed = new BCryptPasswordEncoder().encode(toEncode);
-        return String.format("%s:%s", salt, hashed);
+    public String hashPassword(String password) {
+        return passwordEncoder.encode(password);
     }
 
     public boolean passwordMatch(User user, String password) {
-        // TODO: see what's wrong at password hash
-        final String salt = user.getPassword().split(":")[0];
-        final String testPassword = hashPassword(password, salt);
-        return true;
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
     public String buildToken(

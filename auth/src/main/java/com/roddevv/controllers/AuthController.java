@@ -1,9 +1,6 @@
 package com.roddevv.controllers;
 
-import com.roddevv.dto.AuthRegisterDto;
-import com.roddevv.dto.AuthDto;
-import com.roddevv.dto.AuthLoginDto;
-import com.roddevv.dto.TokenDto;
+import com.roddevv.dto.*;
 import com.roddevv.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,19 +16,16 @@ public class AuthController {
 
     @PostMapping("/login")
     AuthDto login(@RequestBody @Valid AuthLoginDto loginDto) {
-        final String token = authService.login(loginDto);
-        return new AuthDto(token);
+        return authService.login(loginDto);
     }
 
     @PostMapping("/register")
     AuthDto register(@RequestBody @Valid AuthRegisterDto registerDto) {
-        final String token = authService.register(registerDto);
-        return new AuthDto(token);
+        return authService.register(registerDto);
     }
 
-    @PostMapping("/check-token/{token}")
-    TokenDto checkToken(@PathVariable() String token) {
-        final boolean isExpired = authService.checkToken(token);
-        return new TokenDto(isExpired);
+    @PostMapping("/check-token")
+    TokenDto checkToken(@RequestBody() TokenCheckDto dto) {
+        return authService.checkToken(dto);
     }
 }
