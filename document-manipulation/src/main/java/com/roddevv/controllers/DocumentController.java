@@ -1,13 +1,22 @@
 package com.roddevv.controllers;
 
+import com.roddevv.entities.CollaborativeDocument;
+import com.roddevv.services.DocumentCollaborationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("document")
 public class DocumentController {
 
+    @Autowired
+    private DocumentCollaborationService documentCollaborationService;
+
     @GetMapping("/all")
-    public void getAll() {
+    public List<CollaborativeDocument> getAll() {
+        return this.documentCollaborationService.getAll();
     }
 
     @PostMapping("/create")

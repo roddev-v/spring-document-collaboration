@@ -2,10 +2,13 @@ package com.roddevv.services;
 
 import com.roddevv.dto.*;
 import com.roddevv.entities.User;
+import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.Date;
 
 @Service
 public class AuthService {
@@ -45,6 +48,18 @@ public class AuthService {
     }
 
     public TokenDto checkToken(TokenCheckDto dto) {
-        return new TokenDto(cryptoService.isTokenExpired(dto.getToken()));
+        final Claims claims = cryptoService.getTokenClaims(dto.getToken());
+        if (claims == null) {
+            return new TokenDto(true, null);
+        }
+        final boolean expired = claims.getExpiration().before(new Date());
+        if (expired) {
+            return new TokenDto(true, null);
+        }
+        final Long id = claims.get("id", Long.class);
+        final String email = claims.get("email", String.class);
+        final String nickname = claims.get("nickname", String.class);
+        final UserDto userDto = UserDto.builder().id(id).email(email).nickname(nickname).build();
+        return new TokenDto(false, userDto);
     }
 }

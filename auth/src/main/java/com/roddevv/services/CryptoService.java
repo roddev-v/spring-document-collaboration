@@ -1,5 +1,6 @@
 package com.roddevv.services;
 
+import com.roddevv.dto.UserDto;
 import com.roddevv.entities.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.security.Key;
 import java.security.SecureRandom;
@@ -40,6 +42,9 @@ public class CryptoService {
         return Jwts
                 .builder()
                 .setSubject(user.getId().toString())
+                .claim("id", user.getId())
+                .claim("email", user.getEmail())
+                .claim("nickname", user.getNickname())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
@@ -51,15 +56,15 @@ public class CryptoService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public boolean isTokenExpired(String token) {
+    public Claims getTokenClaims(String token) {
         try {
             Jws<Claims> claimsJws = Jwts.parserBuilder()
                     .setSigningKey(getSignInKey())
                     .build()
                     .parseClaimsJws(token);
-            return claimsJws.getBody().getExpiration().before(new Date());
+            return claimsJws.getBody();
         } catch (Exception e) {
-            return true;
+            return null;
         }
     }
 }

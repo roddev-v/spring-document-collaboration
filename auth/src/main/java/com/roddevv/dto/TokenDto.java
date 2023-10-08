@@ -7,4 +7,5 @@ import lombok.Data;
 @Data
 public class TokenDto {
     private boolean isExpired;
+    private UserDto user;
 }

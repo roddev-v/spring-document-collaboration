@@ -1,5 +1,6 @@
 package com.roddevv.dto;
 
+import com.roddevv.entities.SharedUser;
 import lombok.Data;
 
 import java.util.List;
@@ -8,5 +9,5 @@ import java.util.List;
 public class DocumentRequestDto {
     private String title;
     private String author;
-    private List<String> sharedUsers;
+    private List<SharedUser> sharedUsers;
 }

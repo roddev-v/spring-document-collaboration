@@ -20,6 +20,8 @@ spring:
             - Path=/auth/**
         - id: document-manipulation
           uri: lb://DOCUMENT-MANIPULATION-SERVICE
+          filters:
+            - AuthGatewayFilter
           predicates:
             - Path=/document/**
 server:
