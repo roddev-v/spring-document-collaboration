@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalTime;
 import java.util.List;
 
-@Document("collaborative-document")
+@Document("collaborative-documents")
 @Data
 @Builder
 @AllArgsConstructor

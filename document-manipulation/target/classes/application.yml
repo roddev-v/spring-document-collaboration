@@ -1,0 +1,18 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      default-zone: http://localhost:8761/eureka
+server:
+  port: 0
+spring:
+  application:
+    name: document-manipulation-service
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: root
+      password: root
+      database: collaborative-document
