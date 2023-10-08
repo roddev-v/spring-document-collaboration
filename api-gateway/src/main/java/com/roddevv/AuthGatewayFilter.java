@@ -10,6 +10,7 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,6 +54,9 @@ public class AuthGatewayFilter extends AbstractGatewayFilterFactory<AuthGatewayF
                     .retrieve()
                     .bodyToMono(TokenDto.class)
                     .map(tokenDto -> {
+                        if (tokenDto.isExpired()) {
+                            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+                        }
                         final UserDto userDto = tokenDto.getUser();
                         exchange.getRequest()
                                 .mutate()
