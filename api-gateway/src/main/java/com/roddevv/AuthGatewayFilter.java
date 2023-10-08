@@ -1,5 +1,7 @@
 package com.roddevv;
 
+import com.roddevv.dtos.TokenDto;
+import com.roddevv.dtos.UserDto;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
@@ -43,8 +45,23 @@ public class AuthGatewayFilter extends AbstractGatewayFilterFactory<AuthGatewayF
             final Map<String, String> tokenCheckBody = new HashMap<>();
             tokenCheckBody.put("token", parts[1]);
 
-
-            return chain.filter(exchange);
+            return webClientBuilder
+                    .build()
+                    .post()
+                    .uri("http://auth-service/auth/check-token")
+                    .body(BodyInserters.fromValue(tokenCheckBody))
+                    .retrieve()
+                    .bodyToMono(TokenDto.class)
+                    .map(tokenDto -> {
+                        final UserDto userDto = tokenDto.getUser();
+                        exchange.getRequest()
+                                .mutate()
+                                .header("X-auth-user-id", String.valueOf(userDto.getId()))
+                                .header("X-auth-user-email", String.valueOf(userDto.getEmail()))
+                                .header("X-auth-user-nickname", String.valueOf(userDto.getNickname()));
+                        return exchange;
+                    })
+                    .flatMap(chain::filter);
         });
     }
 
