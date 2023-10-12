@@ -1,8 +1,10 @@
 package com.roddevv.controllers;
 
+import com.roddevv.dto.DocumentCreationRequestDto;
 import com.roddevv.entities.CollaborativeDocument;
 import com.roddevv.services.DocumentCollaborationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,13 +17,21 @@ public class DocumentController {
     private DocumentCollaborationService documentCollaborationService;
 
     @GetMapping("/all")
-    public List<CollaborativeDocument> getAll() {
-        return this.documentCollaborationService.getAll();
+    public List<CollaborativeDocument> getAll(
+            @RequestHeader("X-auth-user-id") Long id
+    ) {
+        return this.documentCollaborationService.getAll(id);
     }
 
     @PostMapping("/create")
-    public void create() {
-
+    public CollaborativeDocument create(
+            @RequestHeader("X-auth-user-id") Long id,
+            @RequestHeader("X-auth-user-email") String email,
+            @Validated @RequestBody DocumentCreationRequestDto dto) {
+        dto.setAuthorId(id);
+        dto.setEmail(email);
+        dto.setNickname(dto.getNickname());
+        return this.documentCollaborationService.createDocument(dto);
     }
 
     @PostMapping("/invite")
@@ -35,16 +45,12 @@ public class DocumentController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete() {
+    public void delete(@PathVariable String id) {
+        this.documentCollaborationService.deleteDocument(id);
     }
 
     @PostMapping("/invite-respond")
     public void inviteRespond() {
 
-    }
-
-    @GetMapping("/test")
-    public String test() {
-        return "Document created!";
     }
 }

@@ -11,6 +11,7 @@
         <module name="document-manipulation" />
         <module name="auth" />
         <module name="service-discovery" />
+        <module name="notifications" />
       </profile>
     </annotationProcessing>
   </component>
@@ -19,6 +20,7 @@
       <module name="api-gateway" options="-parameters" />
       <module name="auth" options="-parameters" />
       <module name="document-manipulation" options="-parameters" />
+      <module name="notifications" options="-parameters" />
       <module name="service-discovery" options="-parameters" />
       <module name="spring-document-collaboration" options="" />
     </option>

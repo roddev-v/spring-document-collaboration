@@ -24,6 +24,12 @@ spring:
             - AuthGatewayFilter
           predicates:
             - Path=/document/**
+        - id: notifications
+          uri: lb://NOTIFICATIONS-SERVICE
+          filters:
+            - AuthGatewayFilter
+          predicates:
+            - Path=/notifications/**
 server:
   port: 8080
 

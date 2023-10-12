@@ -20,6 +20,7 @@ public class CollaborativeDocument {
     private String id;
     private String title;
     private String author;
+    private String authorEmail;
     private Long authorId;
     private List<SharedUser> sharedUsers;
     private LocalTime createdAt;
