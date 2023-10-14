@@ -36,7 +36,7 @@ public class DocumentController {
 
     @PostMapping("/invite")
     public void invite() {
-
+        this.documentCollaborationService.invite();
     }
 
     @PostMapping("/revoke")

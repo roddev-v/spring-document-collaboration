@@ -17,3 +17,9 @@ spring:
       password: root
       database: collaborative-document
       authentication-database: admin
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: document-manipulation-consumer
+    producer:
+      group-id: document-manipulation-producer

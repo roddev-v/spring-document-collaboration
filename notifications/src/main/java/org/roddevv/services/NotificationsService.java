@@ -1,6 +1,7 @@
 package org.roddevv.services;
 
 import org.roddevv.models.Notification;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -17,8 +18,9 @@ public class NotificationsService {
         emitter.onError((e) -> emitters.remove(uuid));
     }
 
-    public void send(Notification notification) {
-        final SseEmitter emitter = emitters.get(notification.getRecipientUuid());
+    @KafkaListener(topics = "notifications", groupId = "notifications-consumer")
+    public void send(String notification) {
+        final SseEmitter emitter = emitters.get(notification);
         if (emitter == null) {
             return;
         }
