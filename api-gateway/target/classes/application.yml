@@ -33,3 +33,11 @@ spring:
 server:
   port: 8080
 
+cloud:
+  gateway:
+    globalcors:
+      corsConfigurations:
+        '[/**]':
+          allowedOrigins: "https://docs.spring.io"
+          allowedMethods:
+            - GET

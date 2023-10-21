@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SharedUser {
     private Long id;
-    private String name;
+    private String nickname;
     private String email;
 }
