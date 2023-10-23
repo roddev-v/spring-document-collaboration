@@ -31,6 +31,7 @@ public class DocumentController {
         dto.setAuthorId(id);
         dto.setEmail(email);
         dto.setNickname(dto.getNickname());
+        dto.setAuthor(dto.getNickname());
         return this.documentCollaborationService.createDocument(dto);
     }
 

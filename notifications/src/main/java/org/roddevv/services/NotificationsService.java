@@ -1,33 +1,44 @@
 package org.roddevv.services;
 
-import org.roddevv.models.Notification;
+import org.roddevv.dtos.NotificationDto;
+import org.roddevv.entities.Notification;
+import org.roddevv.repositories.NotificationsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 
 @Service
 public class NotificationsService {
-    private final Map<String, SseEmitter> emitters = new ConcurrentHashMap<>();
 
-    public void subscribe(String uuid, SseEmitter emitter) {
-        emitters.put(uuid, emitter);
-        emitter.onCompletion(() -> emitters.remove(uuid));
-        emitter.onError((e) -> emitters.remove(uuid));
+    @Autowired
+    private NotificationsRepository repository;
+
+    @KafkaListener(topics = "notifications", groupId = "notifications-group-di")
+    private void save(NotificationDto dto) {
+        final String title;
+        final String content;
+        if (dto.getType().equals("invite")) {
+            title = "New invitation!";
+            content = String.format("%S invited you to join a collaboration session", dto.getSenderEmail());
+        } else {
+            title = "Revoked";
+            content = String.format("%S invited you to join a collaboration session", dto.getSenderEmail());
+        }
+        final Notification notification = Notification.builder()
+                .recipientId(dto.getRecipientId())
+                .senderId(dto.getSenderId())
+                .senderEmail(dto.getSenderEmail())
+                .type(dto.getType())
+                .title(title)
+                .content(content)
+                .read(false)
+                .build();
+        repository.save(notification);
     }
 
-    @KafkaListener(topics = "notifications", groupId = "notifications-consumer")
-    public void send(String notification) {
-        final SseEmitter emitter = emitters.get(notification);
-        if (emitter == null) {
-            return;
-        }
-        try {
-            emitter.send(notification);
-        } catch (Exception e) {
-            emitter.complete();
-        }
+    private List<Notification> getUnread(Long recipientId) {
+        return repository.findAllByRecipientId(recipientId).stream().filter(n -> !n.getRead()).toList();
     }
 }
