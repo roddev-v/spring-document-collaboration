@@ -1,16 +1,20 @@
 package com.roddevv.controllers;
 
 import com.roddevv.dto.DocumentCreationRequestDto;
+import com.roddevv.dto.InviteDto;
+import com.roddevv.dto.RevokeDto;
 import com.roddevv.entities.CollaborativeDocument;
 import com.roddevv.services.DocumentCollaborationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("document")
+@AllArgsConstructor
 public class DocumentController {
 
     @Autowired
@@ -36,13 +40,13 @@ public class DocumentController {
     }
 
     @PostMapping("/invite")
-    public void invite() {
-        this.documentCollaborationService.invite();
+    public void invite(@RequestHeader("X-auth-user-id") Long id, @RequestBody InviteDto inviteDto) {
+        this.documentCollaborationService.invite(inviteDto, id);
     }
 
     @PostMapping("/revoke")
-    public void revoke() {
-
+    public void revoke(@RequestHeader("X-auth-user-id") Long id, @RequestBody @Validated RevokeDto revokeDto) {
+        this.documentCollaborationService.revoke(revokeDto, id);
     }
 
     @DeleteMapping("/{id}")

@@ -1,12 +1,12 @@
 package com.roddevv.dto;
 
-import com.roddevv.constants.CollaboratorType;
+import com.roddevv.entities.User;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class InviteDto {
-    private Long userId;
-    private String email;
-    private String nickname;
-    private CollaboratorType type;
+    private String documentId;
+    private List<User> users;
 }

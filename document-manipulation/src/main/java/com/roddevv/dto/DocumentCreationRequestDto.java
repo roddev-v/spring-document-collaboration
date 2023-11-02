@@ -1,6 +1,6 @@
 package com.roddevv.dto;
 
-import com.roddevv.entities.SharedUser;
+import com.roddevv.entities.User;
 import lombok.Builder;
 import lombok.Data;
 
@@ -14,5 +14,5 @@ public class DocumentCreationRequestDto {
     private String email;
     private String nickname;
     private Long authorId;
-    private List<SharedUser> sharedUsers;
+    private List<User> sharedUsers;
 }

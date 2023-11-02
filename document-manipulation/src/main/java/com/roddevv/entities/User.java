@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SharedUser {
+public class User {
     private Long id;
-    private String nickname;
     private String email;
 }

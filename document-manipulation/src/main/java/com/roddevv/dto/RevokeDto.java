@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class RevokeDto {
-    private Long id;
-    private String email;
-    private String nickname;
+    private Long userId;
+    private String documentId;
 }
