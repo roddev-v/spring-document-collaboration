@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Service
@@ -40,7 +42,12 @@ public class AuthService {
         }
 
         final String hashed = cryptoService.hashPassword(dto.getPassword());
-        final User newUser = User.builder().nickname(dto.getNickname()).email(dto.getEmail()).password(hashed).build();
+        final User newUser = User.builder()
+                .nickname(dto.getNickname())
+                .email(dto.getEmail())
+                .createdAt(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
+                .password(hashed)
+                .build();
         final User user = userService.createUser(newUser);
         final String token = cryptoService.buildToken(user);
         final UserDto userDto = UserDto.builder().email(user.getEmail()).id(user.getId()).nickname(user.getNickname()).build();

@@ -12,7 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,7 @@ public class DocumentCollaborationService {
                 .author(dto.getAuthor())
                 .authorId(dto.getAuthorId())
                 .authorEmail(dto.getEmail())
-                .createdAt(LocalTime.now())
+                .createdAt(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
                 .sharedUsers(dto.getSharedUsers())
                 .build();
         return repository.save(collaborativeDocument);

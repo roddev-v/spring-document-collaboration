@@ -31,11 +31,12 @@ public class DocumentController {
     public CollaborativeDocument create(
             @RequestHeader("X-auth-user-id") Long id,
             @RequestHeader("X-auth-user-email") String email,
+            @RequestHeader("X-auth-user-nickname") String nickname,
             @Validated @RequestBody DocumentCreationRequestDto dto) {
         dto.setAuthorId(id);
         dto.setEmail(email);
-        dto.setNickname(dto.getNickname());
-        dto.setAuthor(dto.getNickname());
+        dto.setNickname(nickname);
+        dto.setAuthor(nickname);
         return this.documentCollaborationService.createDocument(dto);
     }
 

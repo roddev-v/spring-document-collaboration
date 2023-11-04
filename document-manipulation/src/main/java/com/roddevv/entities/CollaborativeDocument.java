@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalTime;
 import java.util.List;
 
 @Document("collaborative-documents")
@@ -23,5 +22,5 @@ public class CollaborativeDocument {
     private String authorEmail;
     private Long authorId;
     private List<User> sharedUsers;
-    private LocalTime createdAt;
+    private String createdAt;
 }
