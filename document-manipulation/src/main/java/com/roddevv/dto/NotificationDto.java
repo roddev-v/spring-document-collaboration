@@ -6,8 +6,10 @@ import lombok.Data;
 @Data
 @Builder
 public class NotificationDto {
-    private Long recipientId;
     private Long senderId;
     private String senderEmail;
+    private String senderNickname;
+    private String documentId;
+    private Long recipientId;
     private String type;
 }

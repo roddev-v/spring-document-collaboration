@@ -6,39 +6,59 @@ import org.roddevv.repositories.NotificationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 @Service
 public class NotificationsService {
 
+    private final Map<Long, SseEmitter> emitters = new HashMap<>();
     @Autowired
     private NotificationsRepository repository;
 
-    @KafkaListener(topics = "notifications", groupId = "notifications-group-di")
-    private void save(NotificationDto dto) {
-        final String title;
-        final String content;
-        if (dto.getType().equals("invite")) {
-            title = "New invitation!";
-            content = String.format("%S invited you to join a collaboration session", dto.getSenderEmail());
-        } else {
-            title = "Revoked";
-            content = String.format("%S invited you to join a collaboration session", dto.getSenderEmail());
-        }
-        final Notification notification = Notification.builder()
-                .recipientId(dto.getRecipientId())
-                .senderId(dto.getSenderId())
-                .senderEmail(dto.getSenderEmail())
-                .type(dto.getType())
-                .title(title)
-                .content(content)
-                .read(false)
-                .build();
-        repository.save(notification);
+    public void subscribe(Long id, SseEmitter emitter) {
+        this.emitters.put(id, emitter);
+        emitter.onError((e) -> this.emitters.remove(id));
+        emitter.onCompletion(() -> this.emitters.remove(id));
     }
 
-    private List<Notification> getUnread(Long recipientId) {
-        return repository.findAllByRecipientId(recipientId).stream().filter(n -> !n.getRead()).toList();
+    private boolean send(Long id, Notification notification) {
+        final SseEmitter emitter = this.emitters.get(id);
+        if (!Objects.nonNull(emitter)) {
+            return false;
+        }
+        try {
+            emitter.send(notification);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @KafkaListener(topics = "notifications", groupId = "notifications-group-id")
+    private void sendNotification(NotificationDto dto) {
+        final boolean isSubscribed = this.emitters.get(dto.getRecipientId()) == null;
+        final Notification notification = new Notification(dto);
+
+        this.repository.save(notification);
+        if (isSubscribed) {
+            final boolean delivered = this.send(dto.getRecipientId(), notification);
+            notification.setDelivered(delivered);
+        } else {
+            notification.setDelivered(false);
+        }
+        this.repository.save(notification);
+    }
+
+    public List<Notification> getUnread(Long id) {
+        return this.repository.findUnreadForUser(id);
+    }
+
+    public void readAll(Long id) {
+        this.repository.markAsReadForUser(id);
     }
 }

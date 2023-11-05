@@ -21,18 +21,12 @@ public class DocumentController {
     private DocumentCollaborationService documentCollaborationService;
 
     @GetMapping("/all")
-    public List<CollaborativeDocument> getAll(
-            @RequestHeader("X-auth-user-id") Long id
-    ) {
+    public List<CollaborativeDocument> getAll(@RequestHeader("X-auth-user-id") Long id) {
         return this.documentCollaborationService.getAll(id);
     }
 
     @PostMapping("/create")
-    public CollaborativeDocument create(
-            @RequestHeader("X-auth-user-id") Long id,
-            @RequestHeader("X-auth-user-email") String email,
-            @RequestHeader("X-auth-user-nickname") String nickname,
-            @Validated @RequestBody DocumentCreationRequestDto dto) {
+    public CollaborativeDocument create(@RequestHeader("X-auth-user-id") Long id, @RequestHeader("X-auth-user-email") String email, @RequestHeader("X-auth-user-nickname") String nickname, @Validated @RequestBody DocumentCreationRequestDto dto) {
         dto.setAuthorId(id);
         dto.setEmail(email);
         dto.setNickname(nickname);
@@ -40,19 +34,19 @@ public class DocumentController {
         return this.documentCollaborationService.createDocument(dto);
     }
 
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable String id, @RequestHeader("X-auth-user-id") Long userId) {
+        this.documentCollaborationService.deleteDocument(id, userId);
+    }
+
     @PostMapping("/invite")
-    public void invite(@RequestHeader("X-auth-user-id") Long id, @RequestBody InviteDto inviteDto) {
-        this.documentCollaborationService.invite(inviteDto, id);
+    public void invite(@RequestHeader("X-auth-user-id") Long id, @RequestHeader("X-auth-user-email") String email, @RequestHeader("X-auth-user-nickname") String nickname, @RequestBody InviteDto inviteDto) {
+        this.documentCollaborationService.invite(inviteDto, id, email, nickname);
     }
 
     @PostMapping("/revoke")
     public void revoke(@RequestHeader("X-auth-user-id") Long id, @RequestBody @Validated RevokeDto revokeDto) {
         this.documentCollaborationService.revoke(revokeDto, id);
-    }
-
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
-        this.documentCollaborationService.deleteDocument(id);
     }
 
     @PostMapping("/invite-respond")

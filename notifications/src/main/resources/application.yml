@@ -1,6 +1,14 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    serviceUrl:
+      default-zone: http://localhost:8761/eureka
 server:
   port: 0
 spring:
+  application:
+    name: notifications-service
   datasource:
     url: jdbc:postgresql://localhost:5432/
     username: root
@@ -12,8 +20,6 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
-  application:
-    name: notifications-service
   kafka:
     bootstrap-servers: localhost:9092
     consumer:
