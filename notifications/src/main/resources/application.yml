@@ -22,7 +22,3 @@ spring:
       ddl-auto: update
   kafka:
     bootstrap-servers: localhost:9092
-    consumer:
-      group-id: notifications-consumer
-    producer:
-      group-id: notifications-producer

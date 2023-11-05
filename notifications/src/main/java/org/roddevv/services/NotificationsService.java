@@ -5,6 +5,7 @@ import org.roddevv.entities.Notification;
 import org.roddevv.repositories.NotificationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
@@ -40,8 +41,8 @@ public class NotificationsService {
     }
 
     @KafkaListener(topics = "notifications", groupId = "notifications-group-id")
-    private void sendNotification(NotificationDto dto) {
-        final boolean isSubscribed = this.emitters.get(dto.getRecipientId()) == null;
+    private void sendNotification(@Payload NotificationDto dto) {
+        final boolean isSubscribed = this.emitters.get(dto.getRecipientId()) != null;
         final Notification notification = new Notification(dto);
 
         this.repository.save(notification);
