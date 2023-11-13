@@ -2,10 +2,12 @@ package com.roddevv.controllers;
 
 import com.roddevv.dto.DocumentCreationRequestDto;
 import com.roddevv.dto.InviteDto;
+import com.roddevv.dto.InviteUserDto;
 import com.roddevv.dto.RevokeDto;
 import com.roddevv.entities.CollaborativeDocument;
 import com.roddevv.services.DocumentCollaborationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import lombok.AllArgsConstructor;

@@ -1,17 +1,14 @@
-package com.roddevv.entities;
+package com.roddevv.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class InviteUserDto {
     private Long id;
     private String email;
     private String nickname;
-    private SharedUserStatus status;
 }

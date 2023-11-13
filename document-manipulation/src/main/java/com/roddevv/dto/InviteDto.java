@@ -8,5 +8,5 @@ import java.util.List;
 @Data
 public class InviteDto {
     private String documentId;
-    private List<User> users;
+    private String userQuery;
 }

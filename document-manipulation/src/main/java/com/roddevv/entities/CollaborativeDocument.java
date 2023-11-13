@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
+import java.util.Set;
 
 @Document("collaborative-documents")
 @Data
@@ -21,6 +21,6 @@ public class CollaborativeDocument {
     private String author;
     private String authorEmail;
     private Long authorId;
-    private List<User> sharedUsers;
     private String createdAt;
+    private Set<User> sharedUsers;
 }
