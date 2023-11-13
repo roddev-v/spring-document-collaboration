@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.roddevv.dtos.NotificationDto;
+import org.roddevv.dtos.NotificationRequestDto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,24 +34,26 @@ public class Notification {
     private String content;
 
     private String createdAt;
+    private String type;
 
-    public void setContent(String type) {
-        if (Objects.equals(type, "INVITE")) {
+    public void setContent() {
+        if (Objects.equals(getType(), "INVITE")) {
             this.title = "New invitation";
             this.content = String.format("You were invited to a document collaboration session by %s", this.senderEmail);
-        } else if (Objects.equals(type, "REVOKE")) {
+        } else if (Objects.equals(getType(), "REVOKE")) {
             this.title = "Revoked access";
             this.content = String.format("You were removed from a document by %s", this.senderEmail);
         }
     }
 
-    public Notification(NotificationDto dto) {
+    public Notification(NotificationRequestDto dto) {
         this.setSenderId(dto.getSenderId());
         this.setSenderEmail(dto.getSenderEmail());
         this.setSenderNickname(dto.getSenderNickname());
         this.setDocumentId(dto.getDocumentId());
         this.setRecipientId(dto.getRecipientId());
-        this.setContent(dto.getType());
+        this.setType(dto.getType());
+        this.setContent();
         this.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
     }
 }

@@ -23,6 +23,7 @@
         <module>api-gateway</module>
         <module>document-manipulation</module>
         <module>notifications</module>
+        <module>users</module>
     </modules>
 
     <properties>

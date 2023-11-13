@@ -3,7 +3,7 @@ package org.roddevv.config;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.roddevv.deserializers.NotificationDeserializer;
-import org.roddevv.dtos.NotificationDto;
+import org.roddevv.dtos.NotificationRequestDto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,14 +31,14 @@ public class NotificationConsumerConfig {
     }
 
     @Bean
-    public ConsumerFactory<String, NotificationDto> consumerFactory() {
+    public ConsumerFactory<String, NotificationRequestDto> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerConfig());
     }
 
     @Bean
-    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, NotificationDto>> kafkaListenerContainerFactory(
-            ConsumerFactory<String, NotificationDto> consumerFactory) {
-        ConcurrentKafkaListenerContainerFactory<String, NotificationDto> listenerContainerFactory =
+    public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, NotificationRequestDto>> kafkaListenerContainerFactory(
+            ConsumerFactory<String, NotificationRequestDto> consumerFactory) {
+        ConcurrentKafkaListenerContainerFactory<String, NotificationRequestDto> listenerContainerFactory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         listenerContainerFactory.setConsumerFactory(consumerFactory);
         return listenerContainerFactory;

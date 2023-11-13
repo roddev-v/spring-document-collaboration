@@ -3,7 +3,7 @@ package org.roddevv.dtos;
 import lombok.Data;
 
 @Data
-public class NotificationDto {
+public class NotificationRequestDto {
     private Long senderId;
     private String senderEmail;
     private String senderNickname;
