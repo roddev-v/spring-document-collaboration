@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+// TODO better error handling and some custom constructors for objects
+
 @Service
 @AllArgsConstructor
 public class DocumentCollaborationService {
@@ -46,6 +48,7 @@ public class DocumentCollaborationService {
     }
 
     public void deleteDocument(String id, Long requestUserId) {
+        // TODO notify users for deleted document
         final Optional<CollaborativeDocument> document = this.repository.findById(id);
         if (document.isEmpty() || !Objects.equals(document.get().getAuthorId(), requestUserId)) {
             return;
@@ -105,6 +108,26 @@ public class DocumentCollaborationService {
     }
 
     public void revoke(RevokeDto revokeDto, Long authorId) {
+        final Optional<CollaborativeDocument> document = this.repository.findById(revokeDto.getDocumentId());
+        if (document.isEmpty()) {
+            throw new ResourceNotFound("Document not found");
+        }
 
+        final CollaborativeDocument documentData = document.get();
+        if (!Objects.equals(documentData.getAuthorId(), authorId)) {
+            throw new ResourceNotFound("You can't revoke access for this document!");
+        }
+
+        final boolean hasSharedUser = documentData.getSharedUsers().stream().anyMatch(u -> Objects.equals(u.getId(), revokeDto.getUserId()));
+        if (!hasSharedUser) {
+            throw new ResourceNotFound("User not found");
+        }
+
+        final Set<User> sharedUsers = documentData.getSharedUsers();
+        sharedUsers.removeIf(u -> u.getId().equals(revokeDto.getUserId()));
+        documentData.setSharedUsers(sharedUsers);
+        repository.save(documentData);
+
+        // TODO send notification to revoked user;
     }
 }
