@@ -15,9 +15,7 @@ jobs:
         with:
           distribution: 'corretto'
           java-version: '20'
-      - run: cd api-gateway
-      - run: mvn clean
-      - run: mvn install
+      - run: cd api-gateway && mvn clean && mvn install
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - uses: docker/build-push-action@v5
