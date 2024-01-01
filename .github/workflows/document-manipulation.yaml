@@ -1,0 +1,16 @@
+name: Build Document CRUD manipulation service
+on:
+  push:
+    paths:
+      - document-manipulation/**
+jobs:
+  build-api-gateway:
+    runs-on: ubuntu-latest
+    name: Build the Auth microservice
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '20'
+      - run: cd auth && mvn clean && mvn install
