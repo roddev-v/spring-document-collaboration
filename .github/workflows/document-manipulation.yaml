@@ -6,11 +6,11 @@ on:
 jobs:
   build-api-gateway:
     runs-on: ubuntu-latest
-    name: Build the Auth microservice
+    name: Build the Document CRUD manipulation microservice
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
           java-version: '20'
-      - run: cd auth && mvn clean && mvn install
+      - run: cd document-manipulation && mvn clean && mvn install
