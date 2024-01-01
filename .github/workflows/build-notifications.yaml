@@ -1,0 +1,16 @@
+name: Build Notifications service
+on:
+  push:
+    paths:
+      - notifications/**
+jobs:
+  build-api-gateway:
+    runs-on: ubuntu-latest
+    name: Build the Notifications microservice
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '20'
+      - run: cd notifications && mvn clean && mvn install
