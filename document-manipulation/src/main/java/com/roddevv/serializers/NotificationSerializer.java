@@ -2,7 +2,7 @@ package com.roddevv.serializers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roddevv.dto.NotificationDto;
-import org.apache.commons.lang.SerializationException;
+import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Serializer;
 
 import java.util.Map;

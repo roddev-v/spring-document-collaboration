@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: document-manipulation-db-config
+data:
+  port: "27017"
+  db: "collaborative-documents-db"
+  authentication-database: "admin"
+  host: "document-manipulation-db-service"

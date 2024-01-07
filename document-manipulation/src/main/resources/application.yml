@@ -3,11 +3,11 @@ spring:
     name: document-manipulation-service
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      username: root
-      password: root
-      database: collaborative-document
-      authentication-database: admin
+      host: ${HOST}
+      port: ${PORT}
+      username: ${USERNAME}
+      password: ${PASSWORD}
+      database: ${DB}
+      authentication-database: ${AUTHENTICATION_DATABASE}
   kafka:
     bootstrap-servers: localhost:9092

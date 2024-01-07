@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: document-manipulation-deployment
+  name: document-manipulation-db-deployment
 spec:
   replicas: 1
   selector:
