@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: user-db-deployment
+  name: notifications-db-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user-db
+      app: notifications-db
   template:
     metadata:
       labels:
-        app: user-db
+        app: notifications-db
     spec:
       containers:
         - name: postgres
@@ -19,17 +19,17 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: user-db-secret
+                  name: notifications-db-secret
                   key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: user-db-secret
+                  name: notifications-db-secret
                   key: password
             - name: POSTGRES_DB
               valueFrom:
                 configMapKeyRef:
-                  name: user-db-config
+                  name: notifications-db-config
                   key: db
           ports:
             - containerPort: 5432
@@ -37,10 +37,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: user-db-service
+  name: notifications-db-service
 spec:
   selector:
-    app: user-db
+    app: notifications-db
   ports:
     - protocol: TCP
       port: 5432

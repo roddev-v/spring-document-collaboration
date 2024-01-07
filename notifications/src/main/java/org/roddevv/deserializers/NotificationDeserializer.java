@@ -2,7 +2,7 @@ package org.roddevv.deserializers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.SerializationException;
+import org.apache.kafka.common.errors.SerializationException;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.roddevv.dtos.NotificationRequestDto;
 

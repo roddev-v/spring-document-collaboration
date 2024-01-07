@@ -10,11 +10,13 @@
         <module name="api-gateway" />
         <module name="document-manipulation" />
         <module name="auth" />
-        <module name="service-discovery" />
         <module name="notifications" />
         <module name="users" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="service-discovery" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
