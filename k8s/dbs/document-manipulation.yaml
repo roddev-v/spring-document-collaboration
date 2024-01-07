@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: document-manipulation-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: document-manipulation-db
+  template:
+    metadata:
+      labels:
+        app: document-manipulation-db
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:latest
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: document-manipulation-secret
+                  key: username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: document-manipulation-secret
+                  key: password
+          ports:
+            - containerPort: 27017
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: document-manipulation-db-service
+spec:
+  selector:
+    app: document-manipulation-db
+  ports:
+    - protocol: TCP
+      port: 27017
+      targetPort: 27017

@@ -2,9 +2,9 @@ spring:
   application:
     name: auth-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/
-    username: root
-    password: root
+    url: jdbc:postgresql://${DB_HOST}:${DB_PORT}/${DB}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
     driverClassName: org.postgresql.Driver
   jpa:
     properties:
@@ -15,5 +15,5 @@ spring:
 application:
   security:
     jwt:
-      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      secret-key: ${SECRET}
       expiration: 3000000
