@@ -15,6 +15,27 @@ spec:
       containers:
         - name: api-gateway
           image: roddevv/api-gateway
+          env:
+            - name: AUTH_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: services-map
+                  key: auth
+            - name: DOCUMENT_MANIPULATION_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: services-map
+                  key: document-manipulation
+            - name: NOTIFICATIONS_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: services-map
+                  key: notifications
+            - name: USERS_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: services-map
+                  key: users
           ports:
             - containerPort: 8080
 ---

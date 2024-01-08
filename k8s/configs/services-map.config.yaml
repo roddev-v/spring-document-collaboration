@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: services-map
+data:
+  auth: "http://auth-service"
+  document-manipulation: "http://document-manipulation-service"
+  notifications: "http://notifications-service"
+  users: "http://users-service"
+  kafka: "http://kafka"

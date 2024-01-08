@@ -9,23 +9,23 @@ spring:
           enabled: true
       routes:
         - id: auth
-          uri: lb://AUTH-SERVICE
+          uri: ${AUTH_SERVICE}
           predicates:
             - Path=/auth/**
         - id: document-manipulation
-          uri: lb://DOCUMENT-MANIPULATION-SERVICE
+          uri: ${DOCUMENT_MANIPULATION_SERVICE}
           filters:
             - AuthGatewayFilter
           predicates:
             - Path=/document/**
         - id: notifications
-          uri: lb://NOTIFICATIONS-SERVICE
+          uri: ${NOTIFICATIONS_SERVICE}
           filters:
             - AuthGatewayFilter
           predicates:
             - Path=/notifications/**
         - id: users
-          uri: lb://USERS-SERVICE
+          uri: ${USERS_SERVICE}
           filters:
             - AuthGatewayFilter
           predicates:
