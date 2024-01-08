@@ -39,7 +39,7 @@ public class DocumentController {
         this.documentCollaborationService.deleteDocument(id, userId);
     }
 
-    @PostMapping("/invite")
+    @PostMapping("/invite-user")
     public void invite(@RequestHeader("X-auth-user-id") Long id, @RequestHeader("X-auth-user-email") String email, @RequestHeader("X-auth-user-nickname") String nickname, @RequestBody InviteDto inviteDto) {
         this.documentCollaborationService.invite(inviteDto, id, email, nickname);
     }

@@ -59,9 +59,11 @@ kind: Service
 metadata:
   name: document-manipulation-service
 spec:
+  type: NodePort
   selector:
     app: document-manipulation
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8080
+      nodePort: 31000
