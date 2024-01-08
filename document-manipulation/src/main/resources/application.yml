@@ -10,4 +10,4 @@ spring:
       database: ${DB}
       authentication-database: ${AUTHENTICATION_DATABASE}
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA}

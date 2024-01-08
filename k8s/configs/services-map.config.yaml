@@ -7,4 +7,4 @@ data:
   document-manipulation: "http://document-manipulation-service"
   notifications: "http://notifications-service"
   users: "http://users-service"
-  kafka: "http://kafka"
+  kafka: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"

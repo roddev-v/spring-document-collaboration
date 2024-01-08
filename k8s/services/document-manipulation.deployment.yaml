@@ -46,6 +46,11 @@ spec:
                 secretKeyRef:
                   name: document-manipulation-secret
                   key: password
+            - name: KAFKA
+              valueFrom:
+                configMapKeyRef:
+                  name: services-map
+                  key: kafka
           ports:
             - containerPort: 8080
 ---
