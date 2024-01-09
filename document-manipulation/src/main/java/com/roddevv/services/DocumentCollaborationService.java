@@ -46,12 +46,23 @@ public class DocumentCollaborationService {
     }
 
     public void deleteDocument(String id, Long requestUserId) {
-        // TODO notify users for deleted document
         final Optional<CollaborativeDocument> document = this.repository.findById(id);
         if (document.isEmpty() || !Objects.equals(document.get().getAuthorId(), requestUserId)) {
             return;
         }
         this.repository.deleteById(id);
+
+        final CollaborativeDocument doc = document.get();
+        doc.getSharedUsers().forEach(user -> {
+            final NotificationDto dto = NotificationDto.builder()
+                    .senderId(doc.getAuthorId())
+                    .senderEmail(doc.getAuthorEmail())
+                    .senderNickname(doc.getAuthor())
+                    .recipientId(user.getId())
+                    .type("DOCUMENT_DELETED")
+                    .build();
+            this.notificationService.send(dto);
+        });
     }
 
     public void joinDocument(
@@ -84,12 +95,14 @@ public class DocumentCollaborationService {
         documentData.setSharedUsers(sharedUsers);
         repository.save(documentData);
 
-        this.notificationService.send(
-                userToJoin,
-                emailToJoin,
-                nicknameToJoin,
-                documentData.getAuthorId(),
-                "USER_JOINED"
-        );
+        final NotificationDto dto = NotificationDto.builder()
+                .senderId(userToJoin)
+                .senderEmail(emailToJoin)
+                .senderNickname(nicknameToJoin)
+                .recipientId(documentData.getAuthorId())
+                .type("USER_JOINED")
+                .build();
+
+        this.notificationService.send(dto);
     }
 }

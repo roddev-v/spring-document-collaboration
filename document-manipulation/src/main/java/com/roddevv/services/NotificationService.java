@@ -12,18 +12,7 @@ public class NotificationService {
     @Autowired
     private KafkaTemplate<String, NotificationDto> notificationsTemplate;
 
-    public void send(Long senderId,
-                     String senderEmail,
-                     String senderNickname,
-                     Long recipientId,
-                     String type) {
-        final NotificationDto dto = NotificationDto.builder()
-                .senderId(senderId)
-                .senderEmail(senderEmail)
-                .senderNickname(senderNickname)
-                .recipientId(recipientId)
-                .type(type)
-                .build();
+    public void send(NotificationDto dto) {
         this.notificationsTemplate.send("notifications", dto);
     }
 }
