@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
         <module name="document-manipulation" />
+        <module name="real-time" />
         <module name="auth" />
         <module name="notifications" />
       </profile>
@@ -24,6 +25,7 @@
       <module name="auth" options="-parameters" />
       <module name="document-manipulation" options="-parameters" />
       <module name="notifications" options="-parameters" />
+      <module name="real-time" options="-parameters" />
       <module name="service-discovery" options="-parameters" />
       <module name="spring-document-collaboration" options="" />
       <module name="users" options="-parameters" />

@@ -22,7 +22,7 @@
         <module>api-gateway</module>
         <module>document-manipulation</module>
         <module>notifications</module>
-        <module>users</module>
+        <module>real-time</module>
     </modules>
 
     <properties>
