@@ -1,4 +1,4 @@
-package com.roddevv.dtos;
+package com.roddevv.dto;
 
 import lombok.Builder;
 import lombok.Data;

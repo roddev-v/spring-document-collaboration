@@ -1,6 +1,6 @@
 package com.roddevv.services;
 
-import com.roddevv.dtos.NotificationRequestDto;
+import com.roddevv.dto.NotificationDto;
 import com.roddevv.entities.Notification;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -36,7 +36,7 @@ public class NotificationsService {
     }
 
     @KafkaListener(topics = "notifications", groupId = "notifications-group-id")
-    private void sendNotification(@Payload NotificationRequestDto dto) {
+    private void sendNotification(@Payload NotificationDto dto) {
         final boolean isSubscribed = this.emitters.get(dto.getRecipientId()) != null;
         final Notification notification = new Notification(dto);
 

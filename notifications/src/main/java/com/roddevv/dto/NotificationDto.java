@@ -1,16 +1,12 @@
-package com.roddevv.dtos;
+package com.roddevv.dto;
 
 import lombok.Data;
 
-import java.util.Map;
-
 @Data
-public class NotificationRequestDto {
+public class NotificationDto {
     private Long senderId;
     private String senderEmail;
     private String senderNickname;
-
     private Long recipientId;
     private String type;
-    private Map<String, Object> payload;
 }

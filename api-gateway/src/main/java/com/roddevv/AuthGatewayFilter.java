@@ -1,7 +1,7 @@
 package com.roddevv;
 
-import com.roddevv.dtos.TokenDto;
-import com.roddevv.dtos.UserDto;
+import com.roddevv.dto.TokenDto;
+import com.roddevv.dto.UserDto;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
