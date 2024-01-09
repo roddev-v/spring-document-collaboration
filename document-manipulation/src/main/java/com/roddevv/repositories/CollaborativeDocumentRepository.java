@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface CollaborativeDocumentRepository extends MongoRepository<CollaborativeDocument, String> {
     List<CollaborativeDocument> findByAuthorId(Long authorId);
+
+    List<CollaborativeDocument> findBySharedUsersId(Long relatedUserId);
 }

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: users
-          image: roddevv/users
+          image: registry.digitalocean.com/document-collaboration/users
           env:
             - name: DB_HOST
               valueFrom:
@@ -49,11 +49,9 @@ kind: Service
 metadata:
   name: users-service
 spec:
-  type: NodePort
   selector:
     app: auth
   ports:
     - protocol: TCP
       port: 80
       targetPort: 8080
-      nodePort: 30001

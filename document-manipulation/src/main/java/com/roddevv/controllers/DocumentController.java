@@ -1,8 +1,6 @@
 package com.roddevv.controllers;
 
 import com.roddevv.dto.DocumentCreationRequestDto;
-import com.roddevv.dto.InviteDto;
-import com.roddevv.dto.RevokeDto;
 import com.roddevv.entities.CollaborativeDocument;
 import com.roddevv.services.DocumentCollaborationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,11 @@ public class DocumentController {
         return this.documentCollaborationService.getAll(id);
     }
 
+    @GetMapping("/shared")
+    public List<CollaborativeDocument> getShared(@RequestHeader("X-auth-user-id") Long id) {
+        return this.documentCollaborationService.getSharedWithUser(id);
+    }
+
     @PostMapping("/create")
     public CollaborativeDocument create(@RequestHeader("X-auth-user-id") Long id, @RequestHeader("X-auth-user-email") String email, @RequestHeader("X-auth-user-nickname") String nickname, @Validated @RequestBody DocumentCreationRequestDto dto) {
         dto.setAuthorId(id);
@@ -34,23 +37,13 @@ public class DocumentController {
         return this.documentCollaborationService.createDocument(dto);
     }
 
+    @PostMapping("/join/{documentId}")
+    public void joinDocument(@RequestHeader("X-auth-user-id") Long id, @RequestHeader("X-auth-user-email") String email, @RequestHeader("X-auth-user-nickname") String nickname, @PathVariable String documentId) {
+        this.documentCollaborationService.joinDocument(id, email, nickname, documentId);
+    }
+
     @DeleteMapping("/{id}")
     public void delete(@PathVariable String id, @RequestHeader("X-auth-user-id") Long userId) {
         this.documentCollaborationService.deleteDocument(id, userId);
-    }
-
-    @PostMapping("/invite-user")
-    public void invite(@RequestHeader("X-auth-user-id") Long id, @RequestHeader("X-auth-user-email") String email, @RequestHeader("X-auth-user-nickname") String nickname, @RequestBody InviteDto inviteDto) {
-        this.documentCollaborationService.invite(inviteDto, id, email, nickname);
-    }
-
-    @PostMapping("/revoke")
-    public void revoke(@RequestHeader("X-auth-user-id") Long id, @RequestBody @Validated RevokeDto revokeDto) {
-        this.documentCollaborationService.revoke(revokeDto, id);
-    }
-
-    @PostMapping("/invite-respond")
-    public void inviteRespond() {
-
     }
 }
