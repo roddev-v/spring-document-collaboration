@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
+import java.util.Map;
 
 @Entity
 @Table(name = "notifications")
@@ -25,35 +25,20 @@ public class Notification {
     private String senderEmail;
     private String senderNickname;
 
-    private String documentId;
-
     private Long recipientId;
     private Boolean delivered;
 
-    private String title;
-    private String content;
-
     private String createdAt;
     private String type;
-
-    public void setContent() {
-        if (Objects.equals(getType(), "INVITE")) {
-            this.title = "New invitation";
-            this.content = String.format("You were invited to a document collaboration session by %s", this.senderEmail);
-        } else if (Objects.equals(getType(), "REVOKE")) {
-            this.title = "Revoked access";
-            this.content = String.format("You were removed from a document by %s", this.senderEmail);
-        }
-    }
+    private Map<String, Object> payload;
 
     public Notification(NotificationRequestDto dto) {
         this.setSenderId(dto.getSenderId());
         this.setSenderEmail(dto.getSenderEmail());
         this.setSenderNickname(dto.getSenderNickname());
-        this.setDocumentId(dto.getDocumentId());
         this.setRecipientId(dto.getRecipientId());
         this.setType(dto.getType());
-        this.setContent();
         this.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+        this.setPayload(dto.getPayload());
     }
 }

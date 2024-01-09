@@ -9,9 +9,7 @@ import com.roddevv.exceptions.ResourceNotFound;
 import com.roddevv.repositories.CollaborativeDocumentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,16 +23,15 @@ public class DocumentCollaborationService {
     private CollaborativeDocumentRepository repository;
 
     @Autowired
-    private KafkaTemplate<String, NotificationDto> notificationsTemplate;
-
-    @Autowired
-    private final WebClient.Builder webClientBuilder;
+    private NotificationService notificationService;
 
     public List<CollaborativeDocument> getAll(Long id) {
         return this.repository.findByAuthorId(id);
     }
 
-    public List<CollaborativeDocument> getSharedWithUser(Long id) { return repository.findBySharedUsersId(id); }
+    public List<CollaborativeDocument> getSharedWithUser(Long id) {
+        return repository.findBySharedUsersId(id);
+    }
 
     public CollaborativeDocument createDocument(DocumentCreationRequestDto dto) {
         final CollaborativeDocument collaborativeDocument = CollaborativeDocument.builder()
@@ -86,5 +83,13 @@ public class DocumentCollaborationService {
         sharedUsers.add(addedUser);
         documentData.setSharedUsers(sharedUsers);
         repository.save(documentData);
+
+        this.notificationService.send(
+                userToJoin,
+                emailToJoin,
+                nicknameToJoin,
+                documentData.getAuthorId(),
+                "USER_JOINED"
+        );
     }
 }

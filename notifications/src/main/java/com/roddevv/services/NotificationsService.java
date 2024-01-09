@@ -2,15 +2,12 @@ package com.roddevv.services;
 
 import com.roddevv.dtos.NotificationRequestDto;
 import com.roddevv.entities.Notification;
-import com.roddevv.repositories.NotificationsRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -18,8 +15,6 @@ import java.util.Objects;
 public class NotificationsService {
 
     private final Map<Long, SseEmitter> emitters = new HashMap<>();
-    @Autowired
-    private NotificationsRepository repository;
 
     public void subscribe(Long id, SseEmitter emitter) {
         this.emitters.put(id, emitter);
@@ -51,14 +46,5 @@ public class NotificationsService {
         } else {
             notification.setDelivered(false);
         }
-        this.repository.save(notification);
-    }
-
-    public List<Notification> getUnread(Long id) {
-        return this.repository.findUnreadForUser(id);
-    }
-
-    public void readAll(Long id) {
-        this.repository.markAsReadForUser(id);
     }
 }
