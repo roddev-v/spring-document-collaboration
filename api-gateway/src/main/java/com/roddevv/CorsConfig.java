@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.reactive.CorsWebFilter;
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.Collections;
 
@@ -11,16 +12,19 @@ import java.util.Collections;
 public class CorsConfig {
 
     @Bean
-    public CorsWebFilter corsWebFilter() {
+    public UrlBasedCorsConfigurationSource corsWebFilter() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowedOrigins(Collections.singletonList("*"));
+        corsConfig.setAllowedOriginPatterns(Collections.singletonList("*"));
         corsConfig.setMaxAge(3600L);
-        corsConfig.addAllowedMethod("GET");
-        corsConfig.addAllowedMethod("POST");
-        corsConfig.addAllowedMethod("PUT");
-        corsConfig.addAllowedMethod("DELETE");
+        corsConfig.addAllowedMethod("*");
         corsConfig.addAllowedHeader("*");
+        corsConfig.setAllowCredentials(true);
 
-        return new CorsWebFilter(source -> corsConfig);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/auth/**", corsConfig);
+        source.registerCorsConfiguration("/notifications/**", corsConfig);
+        source.registerCorsConfiguration("/document/**", corsConfig);
+        return source;
     }
 }
