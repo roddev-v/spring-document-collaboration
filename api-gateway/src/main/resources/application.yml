@@ -1,3 +1,47 @@
+#spring:
+#  application:
+#    name: api-gateway
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          lower-case-service-id: true
+#          enabled: true
+#      routes:
+#        - id: auth
+#          uri: ${AUTH_SERVICE}
+#          predicates:
+#            - Path=/auth/**
+#        - id: document-manipulation
+#          uri: ${DOCUMENT_MANIPULATION_SERVICE}
+#          filters:
+#            - AuthGatewayFilter
+#          predicates:
+#            - Path=/document/**
+#        - id: notifications
+#          uri: ${NOTIFICATIONS_SERVICE}
+#          filters:
+#            - AuthGatewayFilter
+#          predicates:
+#            - Path=/notifications/**
+#        - id: users
+#          uri: ${USERS_SERVICE}
+#          filters:
+#            - AuthGatewayFilter
+#          predicates:
+#            - Path=/users/**
+#server:
+#  port: 8080
+#
+#cloud:
+#  gateway:
+#    globalcors:
+#      corsConfigurations:
+#        '[/**]':
+#          allowedOrigins: "https://docs.spring.io"
+#          allowedMethods:
+#            - GET
+
 spring:
   application:
     name: api-gateway
@@ -9,35 +53,12 @@ spring:
           enabled: true
       routes:
         - id: auth
-          uri: ${AUTH_SERVICE}
+          uri: "http://localhost:8080"
           predicates:
             - Path=/auth/**
-        - id: document-manipulation
-          uri: ${DOCUMENT_MANIPULATION_SERVICE}
-          filters:
-            - AuthGatewayFilter
+        - id: rtc
+          uri: "http://localhost:8082"
           predicates:
-            - Path=/document/**
-        - id: notifications
-          uri: ${NOTIFICATIONS_SERVICE}
-          filters:
-            - AuthGatewayFilter
-          predicates:
-            - Path=/notifications/**
-        - id: users
-          uri: ${USERS_SERVICE}
-          filters:
-            - AuthGatewayFilter
-          predicates:
-            - Path=/users/**
+            - Path=/rtc/**
 server:
-  port: 8080
-
-cloud:
-  gateway:
-    globalcors:
-      corsConfigurations:
-        '[/**]':
-          allowedOrigins: "https://docs.spring.io"
-          allowedMethods:
-            - GET
+  port: 8081
