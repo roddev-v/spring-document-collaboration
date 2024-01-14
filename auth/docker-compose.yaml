@@ -7,3 +7,14 @@ services:
       POSTGRES_DB: "users-db"
       POSTGRES_USER: "root"
       POSTGRES_PASSWORD: "root"
+  auth:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: "localhost"
+      DB_PORT: "5432"
+      DB: "users-db"
+      DB_USER: "root"
+      DB_PASSWORD: "root"
+      SECRET: "NDA0RTYzNTI2NjU1NkE1ODZFMzI3MjM1NzUzODc4MkY0MTNGNDQyODQ3MkI0QjYyNTA2NDUzNjc1NjZCNTk3MAoa"
