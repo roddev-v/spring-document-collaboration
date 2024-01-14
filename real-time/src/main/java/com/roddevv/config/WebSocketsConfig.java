@@ -23,12 +23,10 @@ public class WebSocketsConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/rtc")
-                .setAllowedOriginPatterns("*")
-                .addInterceptors(new SessionHandshakeInterceptor());
+                .setAllowedOriginPatterns("*");
 
         registry.addEndpoint("/rtc")
                 .setAllowedOriginPatterns("*")
-                .addInterceptors(new SessionHandshakeInterceptor())
                 .withSockJS();
     }
 }
