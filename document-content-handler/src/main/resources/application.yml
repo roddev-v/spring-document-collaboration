@@ -1,6 +1,29 @@
+#spring:
+#  application:
+#    name: document-content-handler
+#  data:
+#    mongodb:
+#      host: ${HOST}
+#      port: ${PORT}
+#      username: ${USERNAME}
+#      password: ${PASSWORD}
+#      database: ${DB}
+#      authentication-database: ${AUTHENTICATION_DATABASE}
+#  kafka:
+#    bootstrap-servers: ${KAFKA}
+
+# development
+
 spring:
+  application:
+    name: document-content-handler
   data:
     mongodb:
-      host: ${CONTENT_DB_HOST}
-      port: ${CONTENT_DB_PORT}
-      database: ${CONTENT_DB}
+      host: "localhost"
+      port: "27017"
+      username: "admin"
+      password: "admin"
+      database: "documents_content"
+      authentication-database: "admin"
+  kafka:
+    bootstrap-servers: ${KAFKA}

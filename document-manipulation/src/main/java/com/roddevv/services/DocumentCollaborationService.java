@@ -10,6 +10,8 @@ import com.roddevv.repositories.CollaborativeDocumentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,6 +26,9 @@ public class DocumentCollaborationService {
 
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private final WebClient.Builder webClientBuilder;
 
     public List<CollaborativeDocument> getAll(Long id) {
         return this.repository.findByAuthorId(id);
@@ -43,6 +48,18 @@ public class DocumentCollaborationService {
                 .sharedUsers(new HashSet<>())
                 .build();
         final CollaborativeDocument res = repository.save(collaborativeDocument);
+
+        final Map<String, String> documentContentBody = new HashMap<>();
+        documentContentBody.put("id", res.getId());
+        documentContentBody.put("title", res.getTitle());
+        documentContentBody.put("content", "");
+
+        this.webClientBuilder
+                .build()
+                .post()
+                .uri("http://document-content-handler/content")
+                .body(BodyInserters.fromValue(documentContentBody))
+                .retrieve();
         return res;
     }
 
@@ -52,6 +69,11 @@ public class DocumentCollaborationService {
             return;
         }
         this.repository.deleteById(id);
+        this.webClientBuilder
+                .build()
+                .delete()
+                .uri("http://document-content-handler/content/" + id)
+                .retrieve();
 
         final CollaborativeDocument doc = document.get();
         doc.getSharedUsers().forEach(user -> {

@@ -1,37 +1,3 @@
-#spring:
-#  application:
-#    name: api-gateway
-#  cloud:
-#    gateway:
-#      discovery:
-#        locator:
-#          lower-case-service-id: true
-#          enabled: true
-#      routes:
-#        - id: auth
-#          uri: ${AUTH_SERVICE}
-#          predicates:
-#            - Path=/auth/**
-#        - id: document-manipulation
-#          uri: ${DOCUMENT_MANIPULATION_SERVICE}
-#          filters:
-#            - AuthGatewayFilter
-#          predicates:
-#            - Path=/document/**
-#        - id: notifications
-#          uri: ${NOTIFICATIONS_SERVICE}
-#          filters:
-#            - AuthGatewayFilter
-#          predicates:
-#            - Path=/notifications/**
-#        - id: rtc
-#          uri: "http://localhost:8082"
-#          predicates:
-#            - Path=/rtc/**
-#server:
-#  port: 8080
-
-
 spring:
   application:
     name: api-gateway
@@ -43,12 +9,53 @@ spring:
           enabled: true
       routes:
         - id: auth
-          uri: "http://localhost:8080"
+          uri: ${AUTH_SERVICE}
           predicates:
             - Path=/auth/**
+        - id: document-manipulation
+          uri: ${DOCUMENT_MANIPULATION_SERVICE}
+          filters:
+            - AuthGatewayFilter
+          predicates:
+            - Path=/document/**
+        - id: notifications
+          uri: ${NOTIFICATIONS_SERVICE}
+          filters:
+            - AuthGatewayFilter
+          predicates:
+            - Path=/notifications/**
         - id: rtc
-          uri: "http://localhost:8082"
+          uri: ${RTC_SERVICE}
           predicates:
             - Path=/rtc/**
+        - id: content
+          uri: ${CONTENT_SERVICE}
+          filters:
+            - AuthGatewayFilter
+          predicates:
+            - Path=/content/**
 server:
-  port: 8081
+  port: 8080
+
+# development
+
+#spring:
+#  application:
+#    name: api-gateway
+#  cloud:
+#    gateway:
+#      discovery:
+#        locator:
+#          lower-case-service-id: true
+#          enabled: true
+#      routes:
+#        - id: auth
+#          uri: "http://localhost:8080"
+#          predicates:
+#            - Path=/auth/**
+#        - id: rtc
+#          uri: "http://localhost:8082"
+#          predicates:
+#            - Path=/rtc/**
+#server:
+#  port: 8081

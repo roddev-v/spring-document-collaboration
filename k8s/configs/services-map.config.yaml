@@ -8,3 +8,5 @@ data:
   notifications: "http://notifications-service"
   users: "http://users-service"
   kafka: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
+  rtc: "http://rtc"
+  content-service: "http://document-content-handler-service"

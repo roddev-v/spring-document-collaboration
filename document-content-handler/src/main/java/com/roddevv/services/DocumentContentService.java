@@ -6,6 +6,7 @@ import com.roddevv.repositories.DocumentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,6 +20,7 @@ public class DocumentContentService {
                 .title(dto.getTitle())
                 .content("")
                 .build();
+        final List<DocumentContentEntity> docs = this.documentsRepository.findAll();
         return this.documentsRepository.save(entity);
     }
 

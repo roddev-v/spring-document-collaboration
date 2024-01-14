@@ -1,18 +1,9 @@
 version: '3.8'
 services:
   mongodb:
-    image: mongo:latest
+    image: mongo
     ports:
       - "27017:27017"
-  document-content-handler:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
     environment:
-      CONTENT_DB_HOST: "localhost"
-      CONTENT_DB_PORT: "27017"
-      CONTENT_DB: "documents_content"
-    depends_on:
-      - mongodb
+      MONGO_INITDB_ROOT_USERNAME: "admin"
+      MONGO_INITDB_ROOT_PASSWORD: "admin"

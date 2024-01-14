@@ -36,6 +36,16 @@ spec:
                 configMapKeyRef:
                   name: services-map
                   key: users
+            - name: RTC_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: services-map
+                  key: rtc
+            - name: CONTENT_SERVICE
+              valueFrom:
+                configMapKeyRef:
+                  name: services-map
+                  key: content-service
           ports:
             - containerPort: 8080
 ---

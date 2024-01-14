@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: document-content-handler-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: document-content-handler
+  template:
+    metadata:
+      labels:
+        app: document-content-handler
+    spec:
+      containers:
+        - name: document-content-handler
+          image: roddevv/document-content-handler
+          env:
+            - name: HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: document-content-handler-db-config
+                  key: host
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: document-content-handler-db-config
+                  key: port
+            - name: DB
+              valueFrom:
+                configMapKeyRef:
+                  name: document-content-handler-db-config
+                  key: db
+            - name: AUTHENTICATION_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: document-manipulation-db-config
+                  key: authentication-database
+            - name: USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: document-content-handler-secret
+                  key: username
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: document-content-handler-secret
+                  key: password
+            - name: KAFKA
+              valueFrom:
+                configMapKeyRef:
+                  name: services-map
+                  key: kafka
+          ports:
+            - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: document-content-handler-service
+spec:
+  selector:
+    app: document-content-handler
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
