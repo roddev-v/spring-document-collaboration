@@ -23,6 +23,7 @@
         <module>document-manipulation</module>
         <module>notifications</module>
         <module>real-time</module>
+        <module>document-content-handler</module>
     </modules>
 
     <properties>

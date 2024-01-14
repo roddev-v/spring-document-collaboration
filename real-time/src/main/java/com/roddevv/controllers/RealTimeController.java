@@ -6,7 +6,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
+import java.util.Map;
 
 @Controller
 public class RealTimeController {
@@ -15,12 +15,7 @@ public class RealTimeController {
     private SimpMessagingTemplate messagingTemplate;
 
     @MessageMapping("/events/{documentId}")
-    public String sendMessage(@DestinationVariable String documentId, List<Object> event) {
-        // TODOs
-        // 1. Emit the message to the respective channel
-        // 2. Do a local snapshot of the data
-
+    public void sendMessage(@DestinationVariable String documentId, Map<String, Object> event) {
         messagingTemplate.convertAndSend("/events/updates/" + documentId, event);
-        return "Test";
     }
 }

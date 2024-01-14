@@ -1,6 +1,5 @@
 package com.roddevv.config;
 
-import com.roddevv.interceptors.SessionHandshakeInterceptor;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;

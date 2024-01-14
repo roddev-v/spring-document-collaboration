@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="api-gateway" />
+        <module name="document-content-handler" />
         <module name="document-manipulation" />
         <module name="real-time" />
         <module name="auth" />
@@ -23,6 +24,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="api-gateway" options="-parameters" />
       <module name="auth" options="-parameters" />
+      <module name="document-content-handler" options="-parameters" />
       <module name="document-manipulation" options="-parameters" />
       <module name="notifications" options="-parameters" />
       <module name="real-time" options="-parameters" />

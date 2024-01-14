@@ -42,7 +42,8 @@ public class DocumentCollaborationService {
                 .createdAt(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
                 .sharedUsers(new HashSet<>())
                 .build();
-        return repository.save(collaborativeDocument);
+        final CollaborativeDocument res = repository.save(collaborativeDocument);
+        return res;
     }
 
     public void deleteDocument(String id, Long requestUserId) {
