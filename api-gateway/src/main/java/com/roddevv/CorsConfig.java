@@ -30,7 +30,6 @@ public class CorsConfig {
         source.registerCorsConfiguration("/notifications/**", corsConfig);
         source.registerCorsConfiguration("/document/**", corsConfig);
         source.registerCorsConfiguration("/content/**", corsConfig);
-        source.registerCorsConfiguration("/rtc/**", corsConfig);
         return new CorsWebFilter(source);
     }
 }

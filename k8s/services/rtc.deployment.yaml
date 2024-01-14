@@ -29,7 +29,6 @@ kind: Service
 metadata:
   name: rtc-service
 spec:
-  type: LoadBalancer
   selector:
     app: rtc
   ports:
