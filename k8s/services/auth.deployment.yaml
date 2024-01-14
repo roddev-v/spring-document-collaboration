@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auth
-          image: registry.digitalocean.com/document-collaboration/auth
+          image: roddevv/auth
           env:
             - name: DB_HOST
               valueFrom:

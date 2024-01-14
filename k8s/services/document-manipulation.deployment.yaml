@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: document
-          image: registry.digitalocean.com/document-collaboration/document-manipulation
+          image: roddevv/document-manipulation
           env:
             - name: HOST
               valueFrom:

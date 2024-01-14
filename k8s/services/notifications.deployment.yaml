@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: notifications
-          image: registry.digitalocean.com/document-collaboration/notifications
+          image: roddevv/notifications
           env:
             - name: DB_HOST
               valueFrom:

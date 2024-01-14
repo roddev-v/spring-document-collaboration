@@ -32,10 +32,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: document-manipulation-db-service
+  name: document-content-handler-db-service
 spec:
   selector:
-    app: document-manipulation-db
+    app: document-content-handler-db
   ports:
     - protocol: TCP
       port: 27017

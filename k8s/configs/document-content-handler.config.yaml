@@ -6,4 +6,4 @@ data:
   port: "27017"
   db: "documents-content-db"
   authentication-database: "admin"
-  host: "document-content-handler-db-config"
+  host: "document-content-handler-db-service"

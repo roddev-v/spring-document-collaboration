@@ -1,5 +1,5 @@
 spring:
   application:
-    name: rtc
+    name: rtc-service
   kafka:
     bootstrap-servers: ${KAFKA}

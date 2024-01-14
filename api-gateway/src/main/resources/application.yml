@@ -24,16 +24,16 @@ spring:
             - AuthGatewayFilter
           predicates:
             - Path=/notifications/**
-        - id: rtc
-          uri: ${RTC_SERVICE}
-          predicates:
-            - Path=/rtc/**
         - id: content
           uri: ${CONTENT_SERVICE}
           filters:
             - AuthGatewayFilter
           predicates:
             - Path=/content/**
+        - id: rtc
+          uri: ${RTC_SERVICE}
+          predicates:
+            - Path=/rtc/**
 server:
   port: 8080
 
