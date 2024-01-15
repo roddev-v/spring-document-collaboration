@@ -1,9 +1,11 @@
 package com.roddevv.services;
 
 import com.roddevv.dto.DocumentContentDto;
+import com.roddevv.dto.EditingEventDto;
 import com.roddevv.entities.DocumentContentEntity;
 import com.roddevv.repositories.DocumentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,5 +32,20 @@ public class DocumentContentService {
 
     public void delete(String id) {
         this.documentsRepository.deleteById(id);
+    }
+
+    @KafkaListener(topics = "document-editing", groupId = "document-editing-group-id")
+    private void update(EditingEventDto dto) {
+        final Optional<DocumentContentEntity> entity = this.documentsRepository.findById(dto.getDocumentId());
+        if (entity.isEmpty()) {
+            return;
+        }
+        DocumentContentEntity documentContent = entity.get();
+        if (dto.getEventType().equals("update_title")) {
+            documentContent.setTitle(dto.getContent());
+        } else {
+            documentContent.setContent(dto.getContent());
+        }
+        this.documentsRepository.save(documentContent);
     }
 }
