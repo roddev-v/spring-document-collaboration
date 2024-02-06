@@ -7,11 +7,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="api-gateway" />
         <module name="document-content-handler" />
         <module name="document-manipulation" />
         <module name="real-time" />
         <module name="auth" />
+        <module name="api-gateway" />
+        <module name="logging" />
         <module name="notifications" />
       </profile>
     </annotationProcessing>
@@ -26,6 +27,7 @@
       <module name="auth" options="-parameters" />
       <module name="document-content-handler" options="-parameters" />
       <module name="document-manipulation" options="-parameters" />
+      <module name="logging" options="-parameters" />
       <module name="notifications" options="-parameters" />
       <module name="real-time" options="-parameters" />
       <module name="service-discovery" options="-parameters" />

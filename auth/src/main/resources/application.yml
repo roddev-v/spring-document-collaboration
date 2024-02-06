@@ -16,7 +16,7 @@ application:
   security:
     jwt:
       secret-key: ${SECRET}
-      expiration: 300000
+      expiration: 30000000
 
 #development
 #spring:

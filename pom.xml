@@ -24,6 +24,7 @@
         <module>notifications</module>
         <module>real-time</module>
         <module>document-content-handler</module>
+        <module>logging</module>
     </modules>
 
     <properties>
