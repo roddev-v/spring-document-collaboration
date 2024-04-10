@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: document-collaboration
   name: utilities
   labels:
     app: utilities
