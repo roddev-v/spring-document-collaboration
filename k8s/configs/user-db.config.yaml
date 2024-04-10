@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: user-db-config
+  namespace: document-collaboration
 data:
   port: "5432"
   db: "users-db"
