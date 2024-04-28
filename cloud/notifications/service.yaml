@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: documents-db
+  name: notifications
   namespace: document-collaboration
 spec:
   selector:
-    app: documents-db
+    app: notifications
   ports:
     - protocol: TCP
-      port: 27017
-      targetPort: 27017
+      port: 80
+      targetPort: 8080

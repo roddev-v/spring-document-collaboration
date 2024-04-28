@@ -5,3 +5,8 @@ metadata:
   name: services-map
 data:
   kafka: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"
+  auth: "http://auth.document-collaboration.svc.cluster.local"
+  documents: "http://documents.document-collaboration.svc.cluster.local"
+  notifications: "http://notifications.document-collaboration.svc.cluster.local"
+  rtc: "http://rtc.document-collaboration.svc.cluster.local"
+  documents-content: "http://documents-content.document-collaboration.svc.cluster.local"

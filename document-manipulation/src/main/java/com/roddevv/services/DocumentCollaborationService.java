@@ -57,7 +57,7 @@ public class DocumentCollaborationService {
         this.webClientBuilder
                 .build()
                 .post()
-                .uri("http://document-content-handler/content")
+                .uri("http://documents-content/content")
                 .body(BodyInserters.fromValue(documentContentBody))
                 .retrieve();
         return res;
@@ -72,7 +72,7 @@ public class DocumentCollaborationService {
         this.webClientBuilder
                 .build()
                 .delete()
-                .uri("http://document-content-handler/content/" + id)
+                .uri("http://documents-content/content/" + id)
                 .retrieve();
 
         final CollaborativeDocument doc = document.get();

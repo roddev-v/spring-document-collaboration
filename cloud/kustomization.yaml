@@ -3,4 +3,7 @@ resources:
   - dbs/
   - rtc/
   - auth/
-  - documents-content
+  - documents-content/
+  - documents/
+  - notifications/
+  - api-gateway/

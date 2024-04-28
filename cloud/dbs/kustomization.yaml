@@ -2,3 +2,4 @@ resources:
   - users/
   - documents/
   - documents-content/
+  - notifications/

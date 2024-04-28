@@ -49,7 +49,7 @@ public class AuthGatewayFilter extends AbstractGatewayFilterFactory<AuthGatewayF
             return webClientBuilder
                     .build()
                     .post()
-                    .uri("http://auth-service/auth/check-token")
+                    .uri("http://auth/auth/check-token")
                     .body(BodyInserters.fromValue(tokenCheckBody))
                     .retrieve()
                     .bodyToMono(TokenDto.class)

@@ -6,4 +6,4 @@ metadata:
 data:
   port: "5432"
   db: "notifications-db"
-  host: "notifications-db-service"
+  host: "notifications-db"
