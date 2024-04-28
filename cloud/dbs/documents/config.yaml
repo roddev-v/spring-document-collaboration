@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: documents-db-config
+  namespace: document-collaboration
+data:
+  port: "27017"
+  db: "documents-db"
+  authentication-database: "admin"
+  host: "documents-db"

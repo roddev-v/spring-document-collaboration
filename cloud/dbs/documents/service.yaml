@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: documents-db
+  namespace: document-collaboration
+spec:
+  selector:
+    app: documents-db
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432

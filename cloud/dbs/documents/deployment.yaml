@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: documents-db
+  namespace: document-collaboration
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: documents-db
+  template:
+    metadata:
+      labels:
+        app: documents-db
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:latest
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: documents-db-secret
+                  key: username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: documents-db-secret
+                  key: password
+          ports:
+            - containerPort: 27017
