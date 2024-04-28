@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: rtc
+  name: documents-content
   namespace: document-collaboration
 spec:
   selector:
-    app: rtc
+    app: documents-content
   ports:
     - protocol: TCP
       port: 80
