@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: documents-content-db
+  namespace: document-collaboration
+spec:
+  serviceName: documents-content-db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-volume
+      spec:
+        storageClassName: local-path
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  replicas: 3
+  selector:
+    matchLabels:
+      app: documents-content-db
+  template:
+    metadata:
+      labels:
+        app: documents-content-db
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:latest
+          command:
+            - mongod
+            - "--bind_ip_all"
+            - "--replSet"
+            - rs0
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-volume
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: documents-content-db-secret
+                  key: username
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: documents-content-db-secret
+                  key: password
+          ports:
+            - containerPort: 27017

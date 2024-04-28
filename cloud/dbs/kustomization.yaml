@@ -1,3 +1,4 @@
 resources:
   - users/
   - documents/
+  - documents-content/
