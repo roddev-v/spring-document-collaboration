@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: document-collaboration
+  name: services-map
+data:
+  kafka: "my-cluster-kafka-bootstrap.kafka.svc.cluster.local:9092"

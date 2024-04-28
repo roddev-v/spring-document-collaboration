@@ -17,24 +17,3 @@ application:
     jwt:
       secret-key: ${SECRET}
       expiration: 30000000
-
-#development
-#spring:
-#  application:
-#    name: auth-service
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/users-db
-#    username: root
-#    password: root
-#    driverClassName: org.postgresql.Driver
-#  jpa:
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
-#    hibernate:
-#      ddl-auto: update
-#application:
-#  security:
-#    jwt:
-#      secret-key: NDA0RTYzNTI2NjU1NkE1ODZFMzI3MjM1NzUzODc4MkY0MTNGNDQyODQ3MkI0QjYyNTA2NDUzNjc1NjZCNTk3MAoa
-#      expiration: 3000000

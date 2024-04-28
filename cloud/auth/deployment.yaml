@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth
+  namespace: document-collaboration
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth
+  template:
+    metadata:
+      labels:
+        app: auth
+    spec:
+      containers:
+        - name: auth
+          image: roddevv/auth
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: users-db-config
+                  key: host
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: users-db-config
+                  key: port
+            - name: DB
+              valueFrom:
+                configMapKeyRef:
+                  name: users-db-config
+                  key: db
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: users-db-secret
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: users-db-secret
+                  key: password
+            - name: SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: auth-secret
+                  key: secret-key
+          ports:
+            - containerPort: 8080

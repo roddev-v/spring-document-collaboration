@@ -1,0 +1,5 @@
+resources:
+  - shared/
+  - dbs/
+  - rtc/
+  - auth/

@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: document-collaboration
+  name: rtc
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rtc
+  template:
+    metadata:
+      labels:
+        app: rtc
+    spec:
+      containers:
+        - name: rtc
+          image: roddevv/rtc
+          env:
+            - name: KAFKA
+              valueFrom:
+                configMapKeyRef:
+                  name: services-map
+                  key: kafka
+          ports:
+            - containerPort: 8080
