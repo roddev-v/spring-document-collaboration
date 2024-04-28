@@ -17,11 +17,21 @@ spec:
         - name: document-content-handler
           image: roddevv/document-content-handler
           env:
-            - name: HOST
+            - name: R0
               valueFrom:
                 configMapKeyRef:
                   name: document-content-handler-db-config
-                  key: host
+                  key: r0
+            - name: R1
+              valueFrom:
+                configMapKeyRef:
+                  name: document-content-handler-db-config
+                  key: r1
+            - name: R2
+              valueFrom:
+                configMapKeyRef:
+                  name: document-content-handler-db-config
+                  key: r2
             - name: PORT
               valueFrom:
                 configMapKeyRef:

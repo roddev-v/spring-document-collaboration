@@ -8,3 +8,6 @@ data:
   db: "documents-content-db"
   authentication-database: "admin"
   host: "document-content-handler-db-service"
+  r0: "document-content-handler-db-deployment-0"
+  r1: "document-content-handler-db-deployment-1"
+  r2: "document-content-handler-db-deployment-2"
