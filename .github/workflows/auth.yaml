@@ -4,7 +4,7 @@ on:
     paths:
       - auth/**
 jobs:
-  build-api-gateway:
+  build-auth:
     runs-on: ubuntu-latest
     name: Build the Auth microservice
     steps:

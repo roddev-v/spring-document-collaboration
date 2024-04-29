@@ -1,19 +1,19 @@
-name: Build Document service
+name: Build RTC service
 on:
   push:
     paths:
-      - document-manipulation/**
+      - rtc/**
 jobs:
-  build-document-manipulation:
+  build-notifications:
     runs-on: ubuntu-latest
-    name: Build the Document microservice
+    name: Build the RTC microservice
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
           java-version: '20'
-      - run: cd document-manipulation && mvn clean && mvn install
+      - run: cd real-time && mvn clean && mvn install
 
       - uses: docker/setup-buildx-action@v2
 
@@ -25,6 +25,6 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          cd document-manipulation
-          docker build -t roddevv/document-manipulation .
-          docker push roddevv/document-manipulation
+          cd real-time
+          docker build -t roddevv/rtc .
+          docker push roddevv/rtc
