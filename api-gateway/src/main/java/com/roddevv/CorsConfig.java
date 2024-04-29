@@ -29,7 +29,6 @@ public class CorsConfig {
         source.registerCorsConfiguration("/auth/**", corsConfig);
         source.registerCorsConfiguration("/notifications/**", corsConfig);
         source.registerCorsConfiguration("/document/**", corsConfig);
-        source.registerCorsConfiguration("/documents-content/**", corsConfig);
         source.registerCorsConfiguration("/content/**", corsConfig);
         return new CorsWebFilter(source);
     }
