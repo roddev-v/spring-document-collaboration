@@ -3,6 +3,6 @@ spring:
     name: document-content-handler
   data:
     mongodb:
-      uri: mongodb://${USERNAME}:${PASSWORD}@${R0}:${PORT},${R1}:${PORT},${R2}:${PORT}/${DB}
+      uri: mongodb://${USERNAME}:${PASSWORD}@${R0}:${PORT},${R1}:${PORT},${R2}:${PORT}/${DB}?authSource=admin&?replicaSet=rs0
   kafka:
     bootstrap-servers: ${KAFKA}
