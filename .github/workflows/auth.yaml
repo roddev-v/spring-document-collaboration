@@ -26,5 +26,5 @@ jobs:
       - name: Build and Push Docker Image
         run: |
           cd auth
-          docker build -t my-dockerhub-user/auth-service:latest .
-          docker push my-dockerhub-user/auth-service:latest
+          docker build -t roddevv/auth .
+          docker push roddevv/auth
