@@ -7,5 +7,5 @@ data:
   port: "27017"
   db: "documents-content-db"
   r0: "documents-content-db-0.documents-content-db.document-collaboration.svc.cluster.local"
-  r1: "documents-content-db-0.documents-content-db.document-collaboration.svc.cluster.local"
-  r2: "documents-content-db-0.documents-content-db.document-collaboration.svc.cluster.local"
+  r1: "documents-content-db-1.documents-content-db.document-collaboration.svc.cluster.local"
+  r2: "documents-content-db-2.documents-content-db.document-collaboration.svc.cluster.local"
