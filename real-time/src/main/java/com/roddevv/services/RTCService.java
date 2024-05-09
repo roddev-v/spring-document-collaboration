@@ -3,7 +3,6 @@ package com.roddevv.services;
 import com.roddevv.dto.ClientEventDto;
 import com.roddevv.dto.EditingEventDto;
 import com.roddevv.dto.EventBroadcastDto;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-@AllArgsConstructor
 public class RTCService {
     private static final Logger logger = LoggerFactory.getLogger(RTCService.class);
 
