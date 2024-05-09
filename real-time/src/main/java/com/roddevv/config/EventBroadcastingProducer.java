@@ -1,6 +1,7 @@
 package com.roddevv.config;
 
 import com.roddevv.dto.EditingEventDto;
+import com.roddevv.dto.EventBroadcastDto;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -19,13 +20,13 @@ import java.util.Map;
 @Configuration
 @AllArgsConstructor
 @NoArgsConstructor
-public class EditingEventProducer {
+public class EventBroadcastingProducer {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
     @Bean
-    public ProducerFactory<String, EditingEventDto> createKafkaProducer() {
+    public ProducerFactory<String, EventBroadcastDto> createKafkaProducer() {
         final Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -34,7 +35,7 @@ public class EditingEventProducer {
     }
 
     @Bean
-    public KafkaTemplate<String, EditingEventDto> editingEventKafkaTemplate() {
+    public KafkaTemplate<String, EventBroadcastDto> eventBroadcastKafkaTemplate() {
         return new KafkaTemplate<>(createKafkaProducer());
     }
 }
