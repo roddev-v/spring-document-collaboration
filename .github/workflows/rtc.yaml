@@ -2,7 +2,7 @@ name: Build RTC service
 on:
   push:
     paths:
-      - rtc/**
+      - real-time/**
 jobs:
   build-notifications:
     runs-on: ubuntu-latest
