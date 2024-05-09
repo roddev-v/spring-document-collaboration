@@ -6,13 +6,9 @@ import com.roddevv.dto.EventBroadcastDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Service
 public class RTCService {
-    private static final Logger logger = LoggerFactory.getLogger(RTCService.class);
-
     @Autowired
     private KafkaTemplate<String, EditingEventDto> editingTopic;
 
@@ -45,7 +41,6 @@ public class RTCService {
                 .id("TEST")
                 .event(event)
                 .build();
-        logger.info("Broadcasting event emitted by document " + event.getDocumentId());
         broadcastTopic.send("document-editing-broadcast", eventBroadcastDto);
     }
 }
