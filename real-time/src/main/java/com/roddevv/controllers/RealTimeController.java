@@ -24,16 +24,17 @@ public class RealTimeController {
 
     @MessageMapping("/events/{documentId}")
     public void sendMessage(@DestinationVariable String documentId, ClientEventDto event) {
+        logger.info(String.format("Receiving editing event for documentId %s from userId %s", event.getDocumentId(), event.getUserId()));
+
         messagingTemplate.convertAndSend("/events/updates/" + documentId, event);
         rtcService.handleEvent(event);
     }
 
     @KafkaListener(topics = "document-editing-broadcast", groupId = "document-editing-group-id")
     public void broadcastEvent(EventBroadcastDto eventBroadcastDto) {
-        logger.info("Broadcasting event emitted by document " + eventBroadcastDto.getId());
+        final ClientEventDto event = eventBroadcastDto.getEvent();
 
-        final ClientEventDto clientEventDto = eventBroadcastDto.getEvent();
-        messagingTemplate.convertAndSend("/events/updates/" + clientEventDto.getDocumentId(), clientEventDto);
-
+        logger.info(String.format("Broadcasting editing event for documentId %s from userId %s", event.getDocumentId(), event.getUserId()));
+        messagingTemplate.convertAndSend("/events/updates/" + event.getDocumentId(), event);
     }
 }
