@@ -31,5 +31,9 @@ public class RealTimeController {
     @KafkaListener(topics = "document-editing-broadcast", groupId = "document-editing-group-id")
     public void broadcastEvent(EventBroadcastDto eventBroadcastDto) {
         logger.info("Broadcasting event emitted by document " + eventBroadcastDto.getId());
+
+        final ClientEventDto clientEventDto = eventBroadcastDto.getEvent();
+        messagingTemplate.convertAndSend("/events/updates/" + clientEventDto.getDocumentId(), clientEventDto);
+
     }
 }
