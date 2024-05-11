@@ -30,7 +30,7 @@ public class RealTimeController {
         rtcService.handleEvent(event);
     }
 
-    @KafkaListener(topics = "document-editing-broadcast", groupId = "document-editing-group-id")
+    @KafkaListener(topics = "document-editing-broadcast", groupId = "document-editing-" + "#{T(java.util.UUID).randomUUID()}")
     public void broadcastEvent(EventBroadcastDto eventBroadcastDto) {
         final ClientEventDto event = eventBroadcastDto.getEvent();
 
