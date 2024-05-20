@@ -1,13 +1,3 @@
-FROM frolvlad/alpine-glibc
-
-WORKDIR /app
-
-EXPOSE 8080
-
-COPY target/api-gateway .
-
-RUN chmod +x /app/api-gateway
-
-RUN ls -l /app
-
-CMD ["/api-gateway"]
+FROM --platform=linux/amd64 amazoncorretto:21-alpine3.16
+COPY /target/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
