@@ -36,26 +36,3 @@ spring:
             - Path=/rtc/**
 server:
   port: 8080
-
-# development
-
-#spring:
-#  application:
-#    name: api-gateway
-#  cloud:
-#    gateway:
-#      discovery:
-#        locator:
-#          lower-case-service-id: true
-#          enabled: true
-#      routes:
-#        - id: auth
-#          uri: "http://localhost:8080"
-#          predicates:
-#            - Path=/auth/**
-#        - id: rtc
-#          uri: "http://localhost:8082"
-#          predicates:
-#            - Path=/rtc/**
-#server:
-#  port: 8081

@@ -9,11 +9,11 @@ jobs:
     name: Build the API Gateway microservice
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - uses: graalvm/setup-graalvm@v1
         with:
-          distribution: 'corretto'
-          java-version: '20'
-      - run: cd api-gateway && mvn clean && mvn install
+          java-version: '21'
+          distribution: 'graalvm'
+      - run: cd api-gateway && ./mvnw clean && ./mvnw native:compile -Pnative
 
       - uses: docker/setup-buildx-action@v2
 
