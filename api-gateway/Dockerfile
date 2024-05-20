@@ -7,7 +7,8 @@ FROM container-registry.oracle.com/graalvm/native-image:21-ol8 AS builder
 
 WORKDIR /build
 
-COPY . /build
+COPY ./pom.xml /build
+COPY . /build/app/
 
 RUN ./mvnw --no-transfer-progress native:compile -Pnative
 
