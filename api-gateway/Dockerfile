@@ -10,4 +10,4 @@ RUN chmod +x /app/api-gateway
 
 RUN ls -l /app
 
-CMD ["./api-gateway"]
+CMD ["/api-gateway"]
