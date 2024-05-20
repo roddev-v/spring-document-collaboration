@@ -10,7 +10,7 @@ WORKDIR /build
 COPY ./pom.xml /build
 COPY . /build/app/
 
-RUN ./mvnw --no-transfer-progress native:compile -Pnative
+RUN ./app/mvnw --no-transfer-progress native:compile -Pnative
 
 FROM container-registry.oracle.com/os/oraclelinux:8-slim
 
