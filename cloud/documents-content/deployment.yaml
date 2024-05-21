@@ -31,7 +31,7 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 10
             timeoutSeconds: 5
-            failureThreshold: 1
+            failureThreshold: 5
           env:
             - name: R0
               valueFrom:
