@@ -45,7 +45,6 @@ public class AuthGatewayFilter extends AbstractGatewayFilterFactory<AuthGatewayF
             }
             final Map<String, String> tokenCheckBody = new HashMap<>();
             tokenCheckBody.put("token", parts[1]);
-
             return webClientBuilder
                     .build()
                     .post()
