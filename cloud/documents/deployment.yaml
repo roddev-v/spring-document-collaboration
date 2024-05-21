@@ -16,6 +16,13 @@ spec:
       containers:
         - name: document
           image: roddevv/document-manipulation
+          resources:
+            requests:
+              memory: "250Mi"
+              cpu: "250m"
+            limits:
+              memory: "750Mi"
+              cpu: "750m"
           readinessProbe:
             httpGet:
               path: /healthcheck

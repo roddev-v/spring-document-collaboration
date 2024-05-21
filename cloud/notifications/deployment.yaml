@@ -16,6 +16,13 @@ spec:
       containers:
         - name: notifications
           image: roddevv/notifications
+          resources:
+            requests:
+              memory: "250Mi"
+              cpu: "250m"
+            limits:
+              memory: "750Mi"
+              cpu: "750m"
           readinessProbe:
             httpGet:
               path: /healthcheck
