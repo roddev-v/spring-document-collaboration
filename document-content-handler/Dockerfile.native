@@ -1,0 +1,7 @@
+FROM container-registry.oracle.com/os/oraclelinux:9-slim
+
+EXPOSE 8080
+
+COPY ./target/document-content-handler app
+
+ENTRYPOINT ["/app"]
