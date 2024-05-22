@@ -2,5 +2,6 @@ FROM container-registry.oracle.com/os/oraclelinux:9-slim
 
 EXPOSE 8080
 
-COPY ./build/target/api-gateway app
+COPY ./target/api-gateway app
+
 ENTRYPOINT ["/app"]
