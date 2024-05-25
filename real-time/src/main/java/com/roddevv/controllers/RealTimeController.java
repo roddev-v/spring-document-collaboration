@@ -22,6 +22,9 @@ public class RealTimeController {
     @Autowired
     private SimpMessagingTemplate messagingTemplate;
 
+    @Autowired
+    private String uuid;
+
     @MessageMapping("/events/{documentId}")
     public void sendMessage(@DestinationVariable String documentId, ClientEventDto event) {
         logger.info(String.format("Receiving editing event for documentId %s from userId %s", event.getDocumentId(), event.getUserId()));
@@ -30,7 +33,7 @@ public class RealTimeController {
         rtcService.handleEvent(event);
     }
 
-    @KafkaListener(topics = "document-editing-broadcast", groupId = "document-editing-" + "#{T(java.util.UUID).randomUUID()}")
+    @KafkaListener(topics = "document-editing-broadcast", groupId = "#{@uuid}")
     public void broadcastEvent(EventBroadcastDto eventBroadcastDto) {
         final ClientEventDto event = eventBroadcastDto.getEvent();
 
