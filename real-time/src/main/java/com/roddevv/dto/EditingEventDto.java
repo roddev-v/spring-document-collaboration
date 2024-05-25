@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EditingEventDto {
-    private String documentId;
-    private String content;
-    private String eventType;
+    public String documentId;
+    public String content;
+    public String eventType;
 }

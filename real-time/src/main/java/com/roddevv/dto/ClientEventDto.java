@@ -10,10 +10,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClientEventDto {
-    private String type;
-    private List<Object> state;
-    private Long userId;
-    private String documentId;
+    public String type;
+    public List<Object> state;
+    public Long userId;
+    public String documentId;
 
     public String getContent() {
         return (String) this.state.get(2);
