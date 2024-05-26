@@ -4,12 +4,15 @@ metadata:
   namespace: document-collaboration
   name: rtc
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: rtc
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9095'
       labels:
         app: rtc
     spec:
