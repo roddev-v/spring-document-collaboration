@@ -1,9 +1,19 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: users-db
   namespace: document-collaboration
 spec:
+  volumeClaimTemplates:
+    - metadata:
+        name: users-db
+      spec:
+        storageClassName: standard-storage-class
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
   replicas: 1
   selector:
     matchLabels:
@@ -34,3 +44,7 @@ spec:
                   key: db
           ports:
             - containerPort: 5432
+          volumeMounts:
+            - name: users-db
+              mountPath: /var/lib/postgresql/data
+              subPath: postgres

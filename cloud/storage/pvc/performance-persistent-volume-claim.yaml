@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: performance-pvc
+  namespace: document-collaboration
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: performance-storage-class
+  resources:
+    requests:
+      storage: 1Gi

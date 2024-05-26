@@ -1,10 +1,20 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata:
   name: documents-db
   namespace: document-collaboration
 spec:
   replicas: 1
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-volume
+      spec:
+        storageClassName: standard-storage-class
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
   selector:
     matchLabels:
       app: documents-db
@@ -16,6 +26,9 @@ spec:
       containers:
         - name: mongodb
           image: mongo:latest
+          volumeMounts:
+            - mountPath: /data/db
+              name: mongo-volume
           env:
             - name: MONGO_INITDB_ROOT_USERNAME
               valueFrom:

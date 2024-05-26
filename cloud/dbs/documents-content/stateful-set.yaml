@@ -9,7 +9,7 @@ spec:
     - metadata:
         name: mongo-volume
       spec:
-        storageClassName: local-path
+        storageClassName: performance-storage-class
         accessModes:
           - ReadWriteOnce
         resources:

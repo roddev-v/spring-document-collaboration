@@ -1,0 +1,3 @@
+resources:
+  - performance-persistent-volume-claim.yaml
+  - standard-persistent-volume-claim.yaml

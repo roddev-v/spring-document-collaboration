@@ -1,4 +1,5 @@
 resources:
+  - storage/
   - shared/
   - dbs/
   - rtc/
