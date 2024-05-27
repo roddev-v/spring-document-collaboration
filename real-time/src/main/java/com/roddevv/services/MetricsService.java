@@ -3,6 +3,7 @@ package com.roddevv.services;
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.atomic.AtomicInteger;
@@ -10,6 +11,8 @@ import java.util.function.Supplier;
 
 @Component
 public class MetricsService {
+    @Value("${HOSTNAME:unknown}")
+    private String hostname;
     private final AtomicInteger activeConnections = new AtomicInteger(0);
 
     @Autowired
@@ -17,6 +20,8 @@ public class MetricsService {
         Supplier<Number> supplier = activeConnections::get;
         Gauge.builder("websocket_connections_total", supplier)
                 .description("Number of active WebSocket connections")
+                .tag("hostname", hostname)
+                .tag("namespace", "document-collaboration")
                 .register(meterRegistry);
     }
 
