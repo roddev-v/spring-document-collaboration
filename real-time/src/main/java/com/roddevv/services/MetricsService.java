@@ -11,8 +11,6 @@ import java.util.function.Supplier;
 
 @Component
 public class MetricsService {
-    @Value("${HOSTNAME:unknown}")
-    private String hostname;
     private final AtomicInteger activeConnections = new AtomicInteger(0);
 
     @Autowired
@@ -20,7 +18,6 @@ public class MetricsService {
         Supplier<Number> supplier = activeConnections::get;
         Gauge.builder("websocket_connections_total", supplier)
                 .description("Number of active WebSocket connections")
-                .tag("hostname", hostname)
                 .tag("namespace", "document-collaboration")
                 .register(meterRegistry);
     }
