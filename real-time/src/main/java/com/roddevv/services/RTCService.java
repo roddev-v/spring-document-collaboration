@@ -15,8 +15,10 @@ public class RTCService {
     @Autowired
     private KafkaTemplate<String, EventBroadcastDto> broadcastTopic;
 
+    @Autowired
+    private SnowflakeIdService snowflakeIdService;
+
     public void handleEvent(ClientEventDto event) {
-        // TODO check for other event types
         notifyDocumentEdit(event);
     }
 
@@ -27,7 +29,6 @@ public class RTCService {
                 .eventType(event.getType())
                 .build();
         editingTopic.send("document-editing", dto);
-
         broadcastEvent(event);
     }
 
@@ -37,10 +38,15 @@ public class RTCService {
      * I need a key that will tell me if the current host emitted that event or not
      */
     private void broadcastEvent(ClientEventDto event) {
+        final long snowflake = snowflakeIdService.nextSnowflake();
         final EventBroadcastDto eventBroadcastDto = EventBroadcastDto.builder()
-                .id("TEST")
+                .id(snowflake)
                 .event(event)
                 .build();
         broadcastTopic.send("document-editing-broadcast", eventBroadcastDto);
+    }
+
+    public boolean shouldBroadcast(long id) {
+        return !snowflakeIdService.isFromCurrentWorkerNode(id);
     }
 }

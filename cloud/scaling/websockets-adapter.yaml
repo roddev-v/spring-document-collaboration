@@ -4,7 +4,7 @@ prometheus:
 
 rules:
   custom:
-    - seriesQuery: '{__name__=~"^websockets_connections_total$"}'
+    - seriesQuery: '{__name__=~"websocket_connections_total",kubernetes_namespace="document-collaboration",kubernetes_pod_name=~"rtc-.*"}'
       resources:
         overrides:
           kubernetes_namespace:

@@ -3,6 +3,7 @@ package com.roddevv.controllers;
 import com.roddevv.dto.ClientEventDto;
 import com.roddevv.dto.EventBroadcastDto;
 import com.roddevv.services.RTCService;
+import com.roddevv.services.SnowflakeIdService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +36,11 @@ public class RealTimeController {
 
     @KafkaListener(topics = "document-editing-broadcast", groupId = "#{@uuid}")
     public void broadcastEvent(EventBroadcastDto eventBroadcastDto) {
+        if (!rtcService.shouldBroadcast(eventBroadcastDto.getId())) {
+            logger.info(String.format("Skipping broadcast message with Snowflake ID %s", eventBroadcastDto.getId()));
+            return;
+        }
         final ClientEventDto event = eventBroadcastDto.getEvent();
-
         logger.info(String.format("Broadcasting editing event for documentId %s from userId %s", event.getDocumentId(), event.getUserId()));
         messagingTemplate.convertAndSend("/events/updates/" + event.getDocumentId(), event);
     }

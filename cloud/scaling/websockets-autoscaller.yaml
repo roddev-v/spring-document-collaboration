@@ -1,0 +1,17 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: websockets-scaling
+  namespace: document-collaboration
+spec:
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: rtc
+  type: Object
+  object:
+    metric:
+      name: websockets_connections
+      selector: { matchLabels: { verb: GET } }

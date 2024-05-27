@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EventBroadcastDto {
-    public String id;
+    public Long id;
     public ClientEventDto event;
 }
