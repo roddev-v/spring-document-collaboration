@@ -15,7 +15,7 @@ public class MetricsService {
     @Autowired
     public MetricsService(MeterRegistry meterRegistry) {
         Supplier<Number> supplier = activeConnections::get;
-        Gauge.builder("websocket_connections_count", supplier)
+        Gauge.builder("websocket_connections_total", supplier)
                 .description("Number of active WebSocket connections")
                 .register(meterRegistry);
     }
