@@ -10,12 +10,12 @@ import java.util.function.Supplier;
 
 @Component
 public class MetricsService {
-    private AtomicInteger activeConnections = new AtomicInteger(0);
+    private final AtomicInteger activeConnections = new AtomicInteger(0);
 
     @Autowired
     public MetricsService(MeterRegistry meterRegistry) {
-        Supplier<Number> supplier = () -> activeConnections.get();
-        Gauge.builder("websocket.connections.count", supplier)
+        Supplier<Number> supplier = activeConnections::get;
+        Gauge.builder("websocket_connections_count", supplier)
                 .description("Number of active WebSocket connections")
                 .register(meterRegistry);
     }
