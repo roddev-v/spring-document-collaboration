@@ -69,6 +69,7 @@ public class AuthGatewayFilter extends AbstractGatewayFilterFactory<AuthGatewayF
     }
 
     public static class Config {
-
+        public Config() {
+        }
     }
 }

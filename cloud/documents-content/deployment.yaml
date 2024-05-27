@@ -4,7 +4,7 @@ metadata:
   name: documents-content
   namespace: document-collaboration
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: document-content
