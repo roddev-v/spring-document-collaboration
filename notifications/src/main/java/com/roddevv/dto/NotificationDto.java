@@ -36,4 +36,15 @@ public class NotificationDto {
             });
         }
     }
+
+    @Override
+    public String toString() {
+        return "NotificationDto{" +
+                "senderId=" + senderId +
+                ", senderEmail='" + senderEmail + '\'' +
+                ", senderNickname='" + senderNickname + '\'' +
+                ", recipientId=" + recipientId +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }

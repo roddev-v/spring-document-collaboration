@@ -32,7 +32,7 @@ public class RTCService {
                 .content(event.getContent())
                 .eventType(event.getType())
                 .build();
-        logger.info("Editing event" + dto.toString());
+        logger.info("Handling editing event: " + dto.toString());
         editingTopic.send("document-editing", dto);
         broadcastEvent(event);
     }
@@ -48,7 +48,7 @@ public class RTCService {
                 .id(snowflake)
                 .event(event)
                 .build();
-        logger.info("Broadcasted event" + eventBroadcastDto.toString());
+        logger.info("Handling broadcasting event: " + eventBroadcastDto.toString());
         broadcastTopic.send("document-editing-broadcast", eventBroadcastDto);
     }
 

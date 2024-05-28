@@ -38,4 +38,18 @@ public class Notification {
         this.setType(dto.getType());
         this.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
     }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", senderId=" + senderId +
+                ", senderEmail='" + senderEmail + '\'' +
+                ", senderNickname='" + senderNickname + '\'' +
+                ", recipientId=" + recipientId +
+                ", delivered=" + delivered +
+                ", createdAt='" + createdAt + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
 }
