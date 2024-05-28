@@ -3,12 +3,16 @@ package com.roddevv.services;
 import com.roddevv.dto.ClientEventDto;
 import com.roddevv.dto.EditingEventDto;
 import com.roddevv.dto.EventBroadcastDto;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RTCService {
+    private static final Logger logger = LoggerFactory.getLogger(RTCService.class);
+
     @Autowired
     private KafkaTemplate<String, EditingEventDto> editingTopic;
 
@@ -28,6 +32,7 @@ public class RTCService {
                 .content(event.getContent())
                 .eventType(event.getType())
                 .build();
+        logger.info(dto.toString());
         editingTopic.send("document-editing", dto);
         broadcastEvent(event);
     }
@@ -43,6 +48,7 @@ public class RTCService {
                 .id(snowflake)
                 .event(event)
                 .build();
+        logger.info(eventBroadcastDto.toString());
         broadcastTopic.send("document-editing-broadcast", eventBroadcastDto);
     }
 

@@ -43,4 +43,12 @@ public class EventBroadcastDto {
             });
         }
     }
+
+    @Override
+    public String toString() {
+        return "EventBroadcastDto{" +
+                "id=" + id +
+                ", event=" + event +
+                '}';
+    }
 }
