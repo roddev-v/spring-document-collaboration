@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportRuntimeHints;
 
 @Configuration
-@ImportRuntimeHints({EventBroadcastDtoRuntimeHints.class, ClientEventDtoRuntimeHints.class, EditingEventDtoRuntimeHints.class})
+@ImportRuntimeHints({
+        EventBroadcastDtoRuntimeHints.class,
+        ClientEventDtoRuntimeHints.class,
+        EditingEventDtoRuntimeHints.class,
+})
 public class ReflectionConfig {
 }
