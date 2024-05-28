@@ -21,6 +21,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NotificationConsumerConfig {
+
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
