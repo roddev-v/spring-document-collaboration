@@ -27,7 +27,11 @@ public class RTCService {
     }
 
     private void notifyDocumentEdit(ClientEventDto event) {
-        final EditingEventDto dto = new EditingEventDto("TEST", "CONTENT", "TYPE");
+        final EditingEventDto dto = EditingEventDto.builder()
+                .documentId(event.getDocumentId())
+                .eventType(event.getType())
+                .content(event.getContent())
+                .build();
         editingTopic.send("document-editing", dto);
         broadcastEvent(event);
     }
@@ -39,10 +43,7 @@ public class RTCService {
      */
     private void broadcastEvent(ClientEventDto event) {
         final long snowflake = snowflakeIdService.nextSnowflake();
-        final EventBroadcastDto eventBroadcastDto = EventBroadcastDto.builder()
-                .id(snowflake)
-                .event(event)
-                .build();
+        final EventBroadcastDto eventBroadcastDto = EventBroadcastDto.builder().id(snowflake).event(event).build();
         logger.info("Handling broadcasting event: " + eventBroadcastDto.toString());
         broadcastTopic.send("document-editing-broadcast", eventBroadcastDto);
     }
