@@ -14,7 +14,7 @@ public class RTCService {
     private static final Logger logger = LoggerFactory.getLogger(RTCService.class);
 
     @Autowired
-    private KafkaTemplate<String, ClientEventDto> editingTopic;
+    private KafkaTemplate<String, EditingEventDto> editingTopic;
 
     @Autowired
     private KafkaTemplate<String, EventBroadcastDto> broadcastTopic;
@@ -27,7 +27,9 @@ public class RTCService {
     }
 
     private void notifyDocumentEdit(ClientEventDto event) {
-        editingTopic.send("document-editing", event);
+        final EditingEventDto dto = new EditingEventDto(event.getDocumentId(), event.getContent(), event.getType());
+        logger.info("Handling editing event: " + dto.toString());
+        editingTopic.send("document-editing", dto);
         broadcastEvent(event);
     }
 

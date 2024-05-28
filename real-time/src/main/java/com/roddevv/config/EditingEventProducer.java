@@ -25,7 +25,7 @@ public class EditingEventProducer {
     private String bootstrapServers;
 
     @Bean
-    public ProducerFactory<String, EditingEventDto> createKafkaProducer() {
+    public ProducerFactory<String, EditingEventDto> createEditingEventProducerFactory() {
         final Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
@@ -35,6 +35,6 @@ public class EditingEventProducer {
 
     @Bean
     public KafkaTemplate<String, EditingEventDto> editingEventKafkaTemplate() {
-        return new KafkaTemplate<>(createKafkaProducer());
+        return new KafkaTemplate<>(createEditingEventProducerFactory());
     }
 }

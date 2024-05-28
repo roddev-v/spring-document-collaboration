@@ -25,12 +25,16 @@ public class EventBroadcastingProducer {
     private String bootstrapServers;
 
     @Bean
-    public KafkaTemplate<String, EventBroadcastDto> eventBroadcastKafkaTemplate() {
+    public ProducerFactory<String, EventBroadcastDto> createEditingBroadcastProducerFactory() {
         final Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
-        final ProducerFactory<String, EventBroadcastDto> producer = new DefaultKafkaProducerFactory<>(props);
-        return new KafkaTemplate<>(producer);
+        return new DefaultKafkaProducerFactory<>(props);
+    }
+
+    @Bean
+    public KafkaTemplate<String, EventBroadcastDto> eventBroadcastingProducerKafkaTemplate() {
+        return new KafkaTemplate<>(createEditingBroadcastProducerFactory());
     }
 }
