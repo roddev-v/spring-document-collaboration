@@ -1,0 +1,9 @@
+FROM container-registry.oracle.com/os/oraclelinux:9-slim
+
+EXPOSE 8080
+
+ARG FILENAME
+
+COPY ./target/$FILENAME app
+
+ENTRYPOINT ["/app"]
