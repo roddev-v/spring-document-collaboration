@@ -6,15 +6,3 @@ spring:
       uri: mongodb://${USERNAME}:${PASSWORD}@${R0}:${PORT},${R1}:${PORT},${R2}:${PORT}/${DB}?authSource=admin&replicaSet=rs0
   kafka:
     bootstrap-servers: ${KAFKA}
-    consumer:
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: "com.roddevv.dto"
-    topics:
-      document-editing:
-        partitions: 1
-        replicas: 1
