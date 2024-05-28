@@ -27,8 +27,7 @@ public class RTCService {
     }
 
     private void notifyDocumentEdit(ClientEventDto event) {
-        final EditingEventDto dto = new EditingEventDto(event.getDocumentId(), event.getContent(), event.getType());
-        logger.info("Handling editing event: " + dto.toString());
+        final EditingEventDto dto = new EditingEventDto("TEST", "CONTENT", "TYPE");
         editingTopic.send("document-editing", dto);
         broadcastEvent(event);
     }
