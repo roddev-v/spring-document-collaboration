@@ -32,4 +32,13 @@ public class EditingEventDto {
             });
         }
     }
+
+    @Override
+    public String toString() {
+        return "EditingEventDto{" +
+                "documentId='" + documentId + '\'' +
+                ", content='" + content + '\'' +
+                ", eventType='" + eventType + '\'' +
+                '}';
+    }
 }

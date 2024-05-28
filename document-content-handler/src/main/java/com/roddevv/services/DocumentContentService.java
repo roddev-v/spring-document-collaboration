@@ -4,6 +4,8 @@ import com.roddevv.dto.DocumentContentDto;
 import com.roddevv.dto.EditingEventDto;
 import com.roddevv.entities.DocumentContentEntity;
 import com.roddevv.repositories.DocumentsRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,9 @@ import java.util.Optional;
 
 @Service
 public class DocumentContentService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DocumentContentService.class);
+
     @Autowired
     private DocumentsRepository documentsRepository;
 
@@ -36,6 +41,7 @@ public class DocumentContentService {
 
     @KafkaListener(topics = "document-editing", groupId = "document-editing-group-id")
     private void update(EditingEventDto dto) {
+        logger.info("Received event " + dto.toString());
         final Optional<DocumentContentEntity> entity = this.documentsRepository.findById(dto.getDocumentId());
         if (entity.isEmpty()) {
             return;
