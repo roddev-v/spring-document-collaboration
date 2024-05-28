@@ -29,7 +29,7 @@ public class EditingEventDto {
                         MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
                         MemberCategory.INVOKE_DECLARED_METHODS,
                         MemberCategory.PUBLIC_FIELDS,
-                        MemberCategory.DECLARED_CLASSES
+                        MemberCategory.DECLARED_FIELDS
                 );
             });
         }
