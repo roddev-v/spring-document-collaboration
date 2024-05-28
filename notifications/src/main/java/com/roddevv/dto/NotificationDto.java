@@ -13,29 +13,12 @@ import org.springframework.context.annotation.ImportRuntimeHints;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@ImportRuntimeHints(NotificationDto.NotificationDtoRuntimeHints.class)
 public class NotificationDto {
-    public Long senderId;
-    public String senderEmail;
-    public String senderNickname;
-    public Long recipientId;
-    public String type;
-
-    static class NotificationDtoRuntimeHints implements RuntimeHintsRegistrar {
-        @Override
-        public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            hints.reflection().registerType(NotificationDto.class, hint -> {
-                hint.withMembers(
-                        MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
-                        MemberCategory.INVOKE_PUBLIC_METHODS,
-                        MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                        MemberCategory.INVOKE_DECLARED_METHODS,
-                        MemberCategory.PUBLIC_FIELDS,
-                        MemberCategory.DECLARED_FIELDS
-                );
-            });
-        }
-    }
+    private Long senderId;
+    private String senderEmail;
+    private String senderNickname;
+    private Long recipientId;
+    private String type;
 
     @Override
     public String toString() {
@@ -48,3 +31,4 @@ public class NotificationDto {
                 '}';
     }
 }
+
