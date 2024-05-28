@@ -15,9 +15,9 @@ import org.springframework.context.annotation.ImportRuntimeHints;
 @NoArgsConstructor
 @ImportRuntimeHints(EditingEventDto.EditingEventDtoRuntimeHints.class)
 public class EditingEventDto {
-    private String documentId;
-    private String content;
-    private String eventType;
+    public String documentId;
+    public String content;
+    public String eventType;
 
     static class EditingEventDtoRuntimeHints implements RuntimeHintsRegistrar {
         @Override
