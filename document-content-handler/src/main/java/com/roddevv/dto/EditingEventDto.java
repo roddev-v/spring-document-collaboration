@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ImportRuntimeHints;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @ImportRuntimeHints(EditingEventDto.EditingEventDtoRuntimeHints.class)
 public class EditingEventDto {
     public String documentId;
