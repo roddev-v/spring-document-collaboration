@@ -20,6 +20,7 @@ spec:
       containers:
         - name: rtc
           image: roddevv/rtc
+          imagePullPolicy: Always
           resources:
             requests:
               memory: "250Mi"

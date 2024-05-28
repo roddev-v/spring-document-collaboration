@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ImportRuntimeHints(ClientEventDto.ClientEventDtoRuntimeHints.class)
+//@ImportRuntimeHints(ClientEventDto.ClientEventDtoRuntimeHints.class)
 public class ClientEventDto {
     public String type;
     public List<Object> state;
@@ -24,29 +24,29 @@ public class ClientEventDto {
         return (String) this.state.get(2);
     }
 
-    static class ClientEventDtoRuntimeHints implements RuntimeHintsRegistrar {
-        @Override
-        public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
-            hints.reflection().registerType(ClientEventDto.class, hint -> {
-                hint.withMembers(
-                        MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
-                        MemberCategory.INVOKE_PUBLIC_METHODS,
-                        MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                        MemberCategory.INVOKE_DECLARED_METHODS,
-                        MemberCategory.PUBLIC_FIELDS,
-                        MemberCategory.DECLARED_FIELDS
-                );
-            });
-            hints.reflection().registerType(List.class, hint -> {
-                hint.withMembers(
-                        MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
-                        MemberCategory.INVOKE_PUBLIC_METHODS,
-                        MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
-                        MemberCategory.INVOKE_DECLARED_METHODS,
-                        MemberCategory.PUBLIC_FIELDS,
-                        MemberCategory.DECLARED_FIELDS
-                );
-            });
-        }
-    }
+//    static class ClientEventDtoRuntimeHints implements RuntimeHintsRegistrar {
+//        @Override
+//        public void registerHints(RuntimeHints hints, ClassLoader classLoader) {
+//            hints.reflection().registerType(ClientEventDto.class, hint -> {
+//                hint.withMembers(
+//                        MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
+//                        MemberCategory.INVOKE_PUBLIC_METHODS,
+//                        MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
+//                        MemberCategory.INVOKE_DECLARED_METHODS,
+//                        MemberCategory.PUBLIC_FIELDS,
+//                        MemberCategory.DECLARED_FIELDS
+//                );
+//            });
+//            hints.reflection().registerType(List.class, hint -> {
+//                hint.withMembers(
+//                        MemberCategory.INVOKE_PUBLIC_CONSTRUCTORS,
+//                        MemberCategory.INVOKE_PUBLIC_METHODS,
+//                        MemberCategory.INVOKE_DECLARED_CONSTRUCTORS,
+//                        MemberCategory.INVOKE_DECLARED_METHODS,
+//                        MemberCategory.PUBLIC_FIELDS,
+//                        MemberCategory.DECLARED_FIELDS
+//                );
+//            });
+//        }
+//    }
 }
