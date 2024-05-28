@@ -1,6 +1,7 @@
 package com.roddevv.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.aot.hint.MemberCategory;
@@ -9,6 +10,7 @@ import org.springframework.aot.hint.RuntimeHintsRegistrar;
 import org.springframework.context.annotation.ImportRuntimeHints;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ImportRuntimeHints(EditingEventDto.EditingEventDtoRuntimeHints.class)
