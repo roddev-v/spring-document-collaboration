@@ -11,6 +11,9 @@ public interface NotificationsRepository extends CrudRepository<Notification, Lo
     @Query(value = "SELECT n FROM notifications n WHERE m.recipientId = ?1 AND m.delivered = FALSE", nativeQuery = true)
     List<Notification> findUnreadForUser(Long recipientId);
 
+    @Query(value = "SELECT n FROM notifications n WHERE m.recipientId = ?1 AND m.delivered = TRUE", nativeQuery = true)
+    List<Notification> findAllReadForUser(Long recipientId);
+
     @Query(value = "UPDATE notifications n SET n.delivered = TRUE  WHERE m.recipientId = ?1 AND m.delivered = FALSE", nativeQuery = true)
     void markAsReadForUser(Long recipientId);
 }
