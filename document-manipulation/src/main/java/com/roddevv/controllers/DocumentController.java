@@ -1,6 +1,7 @@
 package com.roddevv.controllers;
 
 import com.roddevv.dto.DocumentCreationRequestDto;
+import com.roddevv.dto.RevokeDto;
 import com.roddevv.entities.CollaborativeDocument;
 import com.roddevv.services.DocumentCollaborationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class DocumentController {
     @PostMapping("/join/{documentId}")
     public void joinDocument(@RequestHeader("X-auth-user-id") Long id, @RequestHeader("X-auth-user-email") String email, @RequestHeader("X-auth-user-nickname") String nickname, @PathVariable String documentId) {
         this.documentCollaborationService.joinDocument(id, email, nickname, documentId);
+    }
+
+    @PostMapping("/revoke")
+    public void revokeAccess(@RequestBody() RevokeDto dto, @RequestHeader("X-auth-user-id") Long id) {
+        this.documentCollaborationService.revokeAccess(dto, id);
     }
 
     @DeleteMapping("/{id}")

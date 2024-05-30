@@ -128,4 +128,30 @@ public class DocumentCollaborationService {
 
         this.notificationService.send(dto);
     }
+
+    public void revokeAccess(RevokeDto revokeDto, Long authorId) {
+        final Optional<CollaborativeDocument> document = this.repository.findById(revokeDto.getDocumentId());
+        if (document.isEmpty()) {
+            throw new ResourceNotFound("Document not found");
+        }
+        final CollaborativeDocument documentData = document.get();
+        final boolean isAuthor = Objects.equals(documentData.getAuthorId(), authorId);
+        if (!isAuthor) {
+            throw new BadRequest("You are not the owner of the document");
+        }
+        if (Objects.equals(revokeDto.getUserId(), authorId)) {
+            throw new BadRequest("You can't remove yourself as an author");
+        } else {
+            documentData.getSharedUsers().removeIf(u -> u.getId().equals(revokeDto.getUserId()));
+            this.repository.save(documentData);
+            final NotificationDto dto = NotificationDto.builder()
+                    .recipientId(revokeDto.getUserId())
+                    .senderEmail(documentData.getAuthorEmail())
+                    .senderNickname(documentData.getAuthor())
+                    .senderId(documentData.getAuthorId())
+                    .type("DOCUMENT_ACCESS_REVOKED")
+                    .build();
+            this.notificationService.send(dto);
+        }
+    }
 }
