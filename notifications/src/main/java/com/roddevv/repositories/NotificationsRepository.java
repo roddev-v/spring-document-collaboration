@@ -1,6 +1,8 @@
 package com.roddevv.repositories;
 
 import com.roddevv.entities.Notification;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,12 +10,14 @@ import java.util.List;
 
 public interface NotificationsRepository extends CrudRepository<Notification, Long> {
 
-    @Query(value = "SELECT n FROM notifications n WHERE m.recipientId = ?1 AND m.delivered = FALSE", nativeQuery = true)
-    List<Notification> findUnreadForUser(Long recipientId);
+    @Query(value = "SELECT * FROM notifications WHERE recipient_id = :recipientId AND delivered = FALSE", nativeQuery = true)
+    List<Notification> findUnreadForUser(@org.springframework.data.repository.query.Param("recipientId") Long recipientId);
 
-    @Query(value = "SELECT n FROM notifications n WHERE m.recipientId = ?1 AND m.delivered = TRUE", nativeQuery = true)
-    List<Notification> findAllReadForUser(Long recipientId);
+    @Query(value = "SELECT * FROM notifications WHERE recipient_id = :recipientId AND delivered = TRUE", nativeQuery = true)
+    List<Notification> findAllReadForUser(@org.springframework.data.repository.query.Param("recipientId") Long recipientId);
 
-    @Query(value = "UPDATE notifications n SET n.delivered = TRUE  WHERE m.recipientId = ?1 AND m.delivered = FALSE", nativeQuery = true)
-    void markAsReadForUser(Long recipientId);
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE notifications SET delivered = TRUE WHERE recipient_id = :recipientId AND delivered = FALSE", nativeQuery = true)
+    void markAsReadForUser(@org.springframework.data.repository.query.Param("recipientId") Long recipientId);
 }
