@@ -1,9 +1,11 @@
 package com.roddevv;
 
+import com.roddevv.config.AuthGatewayFilterHints;
 import com.roddevv.dto.TokenDto;
 import com.roddevv.dto.UserDto;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.context.annotation.ImportRuntimeHints;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -17,6 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Component
+@ImportRuntimeHints(AuthGatewayFilterHints.class)
 public class AuthGatewayFilter extends AbstractGatewayFilterFactory<AuthGatewayFilter.Config> {
     private final WebClient.Builder webClientBuilder;
 
