@@ -4,16 +4,17 @@ import com.roddevv.dto.DocumentContentDto;
 import com.roddevv.dto.EditingEventDto;
 import com.roddevv.entities.DocumentContentEntity;
 import com.roddevv.repositories.DocumentsRepository;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class DocumentContentService {
 
     private static final Logger logger = LoggerFactory.getLogger(DocumentContentService.class);
@@ -27,7 +28,6 @@ public class DocumentContentService {
                 .title(dto.getTitle())
                 .content("")
                 .build();
-        final List<DocumentContentEntity> docs = this.documentsRepository.findAll();
         return this.documentsRepository.save(entity);
     }
 
