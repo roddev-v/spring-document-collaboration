@@ -19,6 +19,11 @@ public class DocumentController {
     @Autowired
     private DocumentCollaborationService documentCollaborationService;
 
+    @GetMapping("/{id}")
+    public CollaborativeDocument get(@PathVariable String id, @RequestHeader("X-auth-user-id") Long userId) {
+        return this.documentCollaborationService.getById(id, userId);
+    }
+
     @GetMapping("/all")
     public List<CollaborativeDocument> getAll(@RequestHeader("X-auth-user-id") Long id) {
         return this.documentCollaborationService.getAll(id);

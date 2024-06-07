@@ -41,6 +41,17 @@ public class DocumentCollaborationService {
     @Autowired
     private final WebClient.Builder webClientBuilder;
 
+    public CollaborativeDocument getById(String id, Long userId) {
+        final Optional<CollaborativeDocument> data = this.repository.findById(id);
+        if (data.isEmpty()) {
+            throw new ResourceNotFound("Document not found");
+        }
+        if (!data.get().getAuthorId().equals(userId)) {
+            throw new ResourceNotFound("Document not found");
+        }
+        return data.get();
+    }
+
     public List<CollaborativeDocument> getAll(Long id) {
         return this.repository.findByAuthorId(id);
     }
