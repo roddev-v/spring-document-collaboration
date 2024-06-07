@@ -8,7 +8,10 @@ import com.roddevv.exceptions.BadRequest;
 import com.roddevv.exceptions.ResourceNotFound;
 import com.roddevv.repositories.CollaborativeDocumentRepository;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -20,6 +23,7 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class DocumentCollaborationService {
+    private static final Logger logger = LoggerFactory.getLogger(DocumentCollaborationService.class);
 
     @Autowired
     private CollaborativeDocumentRepository repository;
@@ -154,4 +158,10 @@ public class DocumentCollaborationService {
             this.notificationService.send(dto);
         }
     }
+
+    @KafkaListener(topics = "document-editing", groupId = "document-metadata-apply-group-id")
+    private  void applyChangesToDocument(EditingEventDto dto) {
+        logger.info("Received event " + dto.toString());
+    }
+
 }

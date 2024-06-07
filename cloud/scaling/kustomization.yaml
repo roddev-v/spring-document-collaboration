@@ -1,2 +1,5 @@
 resources:
   - documents-content-hpa.yaml
+  - notifications-hpa.yaml
+  - document-manipulation-hpa.yaml
+  - api-gateway-hpa.yaml
