@@ -166,14 +166,17 @@ public class DocumentCollaborationService {
         }
     }
 
-    @KafkaListener(topics = "document-editing", groupId = "document-metadata-apply-group-id")
+    @KafkaListener(topics = "document-metadata", groupId = "document-metadata-group-id")
     private void applyChangesToDocument(EditingEventDto dto) {
         logger.info("Received event " + dto.toString());
+        Query query = new Query(Criteria.where("id").is(dto.getDocumentId()));
         if (dto.getEventType().equals("update_title")) {
-            Query query = new Query(Criteria.where("id").is(dto.getDocumentId()));
             Update update = new Update().set("title", dto.getContent());
             mongoTemplate.updateFirst(query, update, CollaborativeDocument.class);
         }
+
+        Update update = new Update().set("lastEditedAt", LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
+        mongoTemplate.updateFirst(query, update, CollaborativeDocument.class);
     }
 
 }

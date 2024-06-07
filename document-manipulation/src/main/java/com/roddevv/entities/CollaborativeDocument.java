@@ -23,4 +23,5 @@ public class CollaborativeDocument {
     private Long authorId;
     private String createdAt;
     private Set<User> sharedUsers;
+    private String lastEditedAt;
 }

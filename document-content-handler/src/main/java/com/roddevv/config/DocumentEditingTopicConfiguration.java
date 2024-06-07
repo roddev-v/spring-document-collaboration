@@ -11,4 +11,9 @@ public class DocumentEditingTopicConfiguration {
     public NewTopic documentEditingTopic() {
         return TopicBuilder.name("document-editing").build();
     }
+
+    @Bean
+    public NewTopic documentMetadataTopic() {
+        return TopicBuilder.name("document-metadata").build();
+    }
 }

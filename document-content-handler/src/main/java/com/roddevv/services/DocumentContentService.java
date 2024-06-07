@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -21,6 +22,9 @@ public class DocumentContentService {
 
     @Autowired
     private DocumentsRepository documentsRepository;
+
+    @Autowired
+    private KafkaTemplate<String, EditingEventDto> metadataUpdate;
 
     public DocumentContentEntity create(DocumentContentDto dto) {
         final DocumentContentEntity entity = DocumentContentEntity.builder()
@@ -49,6 +53,7 @@ public class DocumentContentService {
         DocumentContentEntity documentContent = entity.get();
         if (dto.getEventType().equals("update_title")) {
             documentContent.setTitle(dto.getContent());
+            metadataUpdate.send("document-metadata", dto);
         } else {
             documentContent.setContent(dto.getContent());
         }
