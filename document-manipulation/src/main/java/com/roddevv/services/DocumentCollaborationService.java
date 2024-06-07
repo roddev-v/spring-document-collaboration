@@ -11,6 +11,10 @@ import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -27,6 +31,9 @@ public class DocumentCollaborationService {
 
     @Autowired
     private CollaborativeDocumentRepository repository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Autowired
     private NotificationService notificationService;
@@ -160,8 +167,13 @@ public class DocumentCollaborationService {
     }
 
     @KafkaListener(topics = "document-editing", groupId = "document-metadata-apply-group-id")
-    private  void applyChangesToDocument(EditingEventDto dto) {
+    private void applyChangesToDocument(EditingEventDto dto) {
         logger.info("Received event " + dto.toString());
+        if (dto.getEventType().equals("update_title")) {
+            Query query = new Query(Criteria.where("id").is(dto.getDocumentId()));
+            Update update = new Update().set("title", dto.getContent());
+            mongoTemplate.updateFirst(query, update, CollaborativeDocument.class);
+        }
     }
 
 }
