@@ -46,7 +46,8 @@ public class DocumentCollaborationService {
         if (data.isEmpty()) {
             throw new ResourceNotFound("Document not found");
         }
-        if (!data.get().getAuthorId().equals(userId)) {
+        final List<Long> sharedUser = data.get().getSharedUsers().stream().map(User::getId).toList();
+        if (!data.get().getAuthorId().equals(userId) && !sharedUser.contains(userId)) {
             throw new ResourceNotFound("Document not found");
         }
         return data.get();
