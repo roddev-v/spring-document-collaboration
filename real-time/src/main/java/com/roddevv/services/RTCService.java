@@ -9,10 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RTCService {
     private static final Logger logger = LoggerFactory.getLogger(RTCService.class);
 
+    private List<String> editingEvents = List.of("update_title", "update_content");
+
+    private List<String> nonEditingEvents = List.of("update_caret_position");
     @Autowired
     private KafkaTemplate<String, EditingEventDto> editingTopic;
 
@@ -23,7 +28,11 @@ public class RTCService {
     private SnowflakeIdService snowflakeIdService;
 
     public void handleEvent(ClientEventDto event) {
-        notifyDocumentEdit(event);
+        if(editingEvents.contains(event.getType())) {
+            notifyDocumentEdit(event);
+        } else if(nonEditingEvents.contains(event.getType())) {
+            broadcastEvent(event);
+        }
     }
 
     private void notifyDocumentEdit(ClientEventDto event) {
